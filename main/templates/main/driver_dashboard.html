@@ -3,12 +3,17 @@
 {% block title %}Driver Dashboard{% endblock %}
 
 {% block content %}
-<div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-  <div class="text-center mb-12">
-    <h1 class="text-4xl font-extrabold text-vm-navy sm:text-5xl">
+<!-- TWEAK: Reduced vertical padding py-12 to py-10 -->
+<div class="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+  
+  <!-- TWEAK: Reduced bottom margin mb-12 to mb-10 -->
+  <div class="text-center mb-10">
+    <!-- TWEAK: Reduced font size from 4xl/5xl to 3xl/4xl -->
+    <h1 class="text-3xl font-extrabold text-vm-navy sm:text-4xl">
       Driver Dashboard
     </h1>
-    <p class="mt-4 text-xl text-gray-600">
+    <!-- TWEAK: Reduced font size from xl to lg and margin from mt-4 to mt-2 -->
+    <p class="mt-2 text-lg text-gray-600">
       Welcome, <span class="font-semibold">{{ request.user.first_name | default:request.user.username }}</span>!
     </p>
   </div>
@@ -22,8 +27,9 @@
       <!-- Driver Status Card (DYNAMIC) -->
       <div class="bg-white rounded-xl shadow-lg overflow-hidden">
         <div class="p-6">
-          <h3 class="text-2xl font-semibold text-vm-navy mb-4">Your Status</h3>
-          <!-- This section is now DYNAMIC and reads from the database -->
+          <!-- TWEAK: Reduced font size from 2xl to xl -->
+          <h3 class="text-xl font-semibold text-vm-navy mb-4">Your Status</h3>
+          
           {% if driver_profile %}
             {% if driver_profile.status == 'available' %}
               <div class="flex items-center space-x-3">
@@ -31,7 +37,8 @@
                   <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-vm-green opacity-75"></span>
                   <span class="relative inline-flex rounded-full h-3 w-3 bg-vm-green"></span>
                 </span>
-                <span class="text-xl font-medium text-green-700">Available</span>
+                <!-- TWEAK: Reduced font size from xl to lg -->
+                <span class="text-lg font-medium text-green-700">Available</span>
               </div>
               <p class="mt-2 text-gray-600">You are online and ready to receive ride requests.</p>
               
@@ -40,7 +47,8 @@
                 <span class="flex h-3 w-3 relative">
                   <span class="relative inline-flex rounded-full h-3 w-3 bg-vm-blue"></span>
                 </span>
-                <span class="text-xl font-medium text-blue-700">On Ride</span>
+                <!-- TWEAK: Reduced font size from xl to lg -->
+                <span class="text-lg font-medium text-blue-700">On Ride</span>
               </div>
               <p class="mt-2 text-gray-600">You are currently on a ride.</p>
               
@@ -49,7 +57,8 @@
                 <span class="flex h-3 w-3 relative">
                   <span class="relative inline-flex rounded-full h-3 w-3 bg-gray-500"></span>
                 </span>
-                <span class="text-xl font-medium text-gray-700">Offline</span>
+                <!-- TWEAK: Reduced font size from xl to lg -->
+                <span class="text-lg font-medium text-gray-700">Offline</span>
               </div>
               <p class="mt-2 text-gray-600">You are offline and will not receive requests.</p>
             {% endif %}
@@ -58,7 +67,8 @@
               <span class="flex h-3 w-3 relative">
                 <span class="relative inline-flex rounded-full h-3 w-3 bg-vm-red"></span>
               </span>
-              <span class="text-xl font-medium text-vm-red">Profile Not Found</span>
+              <!-- TWEAK: Reduced font size from xl to lg -->
+              <span class="text-lg font-medium text-vm-red">Profile Not Found</span>
             </div>
             <p class="mt-2 text-gray-600">Please contact admin to complete your profile.</p>
           {% endif %}
@@ -68,10 +78,12 @@
       <!-- Other Cards (Rating, Accepted Rides) -->
       <div class="bg-white rounded-xl shadow-lg overflow-hidden">
         <div class="p-6">
-          <h3 class="text-2xl font-semibold text-vm-navy mb-4">Statistics</h3>
+          <!-- TWEAK: Reduced font size from 2xl to xl -->
+          <h3 class="text-xl font-semibold text-vm-navy mb-4">Statistics</h3>
           <div class="space-y-3">
-            <p class="text-lg text-gray-700">Rating: <span class="font-bold text-vm-blue">4.8</span></p>
-            <p class="text-lg text-gray-700">Rides Completed: <span class="font-bold text-vm-blue">0</span></p>
+            <!-- TWEAK: Reduced font size from lg to base -->
+            <p class="text-base text-gray-700">Rating: <span class="font-bold text-vm-blue">4.8</span></p>
+            <p class="text-base text-gray-700">Rides Completed: <span class="font-bold text-vm-blue">0</span></p>
           </div>
         </div>
       </div>
@@ -79,7 +91,8 @@
     
     <!-- Right Column: Incoming Ride Requests -->
     <div class="md:col-span-2">
-      <h2 class="text-3xl font-bold text-vm-navy mb-6">Incoming Ride Requests</h2>
+      <!-- TWEAK: Reduced font size from 3xl to 2xl and margin from mb-6 to mb-4 -->
+      <h2 class="text-2xl font-bold text-vm-navy mb-4">Incoming Ride Requests</h2>
       
       <div class="space-y-6">
         <!-- 
@@ -93,27 +106,64 @@
           <div class="p-6">
             <div class="flex justify-between items-start mb-3">
               <div>
-                <h3 class="text-2xl font-semibold text-vm-navy">Priya Sharma</h3>
-                <p class="text-lg text-gray-600">+91 98765 43210</p>
+                <!-- TWEAK: Reduced font size from 2xl to xl -->
+                <h3 class="text-xl font-semibold text-vm-navy">Priya Sharma</h3>
+                <!-- TWEAK: Reduced font size from lg to base -->
+                <p class="text-base text-gray-600">+91 98765 43210</p>
               </div>
               <span class="text-sm font-medium text-orange-600 bg-orange-100 py-1 px-3 rounded-full">8:48:55 PM</span>
             </div>
             
             <div class="bg-gray-50 p-4 rounded-lg mb-4">
               <p class="text-sm font-medium text-gray-500 uppercase tracking-wide">Pickup Location</p>
-              <p class="text-lg font-semibold text-gray-800">Park Street, Kolkata</p>
+              <!-- TWEAK: Reduced font size from lg to base -->
+              <p class="text-base font-semibold text-gray-800">Park Street, Kolkata</p>
             </div>
             
-            <details class="mb-4">
-              <summary class="text-lg font-medium text-vm-blue cursor-pointer hover:underline">
-                Get Location
-              </summary>
-              <div class="mt-2 bg-gray-100 p-3 rounded-md">
-                <p class="text-gray-700">Lat: 22.5514, Lng: 88.3519</p>
-              </div>
-            </details>
+            <!-- TWEAK: Changed <details> tag to an <a> link tag -->
+            <a href="https://www.circuitdigest.cloud/geolinker-web-app" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               class="inline-block text-base font-medium text-vm-blue cursor-pointer hover:underline mb-4">
+              Get Location
+            </a>
 
-            <button class="w-full bg-vm-blue hover:bg-blue-700 text-white font-bold text-lg py-3 px-6 rounded-lg transition duration-300 ease-in-out shadow-md">
+            <!-- TWEAK: Reduced font size from lg to base -->
+            <button class="w-full bg-vm-blue hover:bg-blue-700 text-white font-bold text-base py-3 px-6 rounded-lg transition duration-300 ease-in-out shadow-md">
+              Accept Ride
+            </button>
+          </div>
+        </div>
+        
+        <!-- Placeholder Ride Request Card 2 (India-Specific) -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="p-6">
+            <div class="flex justify-between items-start mb-3">
+              <div>
+                <!-- TWEAK: Reduced font size from 2xl to xl -->
+                <h3 class="text-xl font-semibold text-vm-navy">Rohan Gupta</h3>
+                <!-- TWEAK: Reduced font size from lg to base -->
+                <p class="text-base text-gray-600">+91 91234 56789</p>
+              </div>
+              <span class="text-sm font-medium text-orange-600 bg-orange-100 py-1 px-3 rounded-full">8:47:12 PM</span>
+            </div>
+            
+            <div class="bg-gray-50 p-4 rounded-lg mb-4">
+              <p class="text-sm font-medium text-gray-500 uppercase tracking-wide">Pickup Location</p>
+              <!-- TWEAK: Reduced font size from lg to base -->
+              <p class="text-base font-semibold text-gray-800">Salt Lake, Sector V</p>
+            </div>
+            
+            <!-- TWEAK: Changed <details> tag to an <a> link tag -->
+            <a href="https://www.circuitdigest.cloud/geolinker-web-app" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               class="inline-block text-base font-medium text-vm-blue cursor-pointer hover:underline mb-4">
+              Get Location
+            </a>
+
+            <!-- TWEAK: Reduced font size from lg to base -->
+            <button class="w-full bg-vm-blue hover:bg-blue-700 text-white font-bold text-base py-3 px-6 rounded-lg transition duration-300 ease-in-out shadow-md">
               Accept Ride
             </button>
           </div>

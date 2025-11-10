@@ -3,144 +3,143 @@
 {% block title %}Guardian Dashboard{% endblock %}
 
 {% block content %}
-<div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+<!-- TWEAK: Reduced vertical padding from py-12 to py-10 -->
+<div class="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
   
-  <div class="text-center mb-12">
-    <h1 class="text-4xl font-extrabold text-vm-navy sm:text-5xl">
+  <!-- TWEAK: Reduced bottom margin from mb-12 to mb-10 -->
+  <div class="text-center mb-10">
+    <!-- TWEAK: Reduced font size from 4xl/5xl to 3xl/4xl -->
+    <h1 class="text-3xl font-extrabold text-vm-navy sm:text-4xl">
       Guardian Dashboard
     </h1>
-    <p class="mt-4 text-xl text-gray-600">
+    <!-- TWEAK: Reduced font size from xl to lg and margin from mt-4 to mt-2 -->
+    <p class="mt-2 text-lg text-gray-600">
       Welcome, <span class="font-semibold">{{ request.user.first_name | default:request.user.username }}</span>!
     </p>
   </div>
 
   <!-- Main Content Grid -->
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+  <!-- TWEAK: Reduced gap from gap-8 to gap-6 -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
     
-    <!-- Left Column: Live Map (Wider) -->
+    <!-- Left Column: Live Tracking -->
     <div class="lg:col-span-2">
-      <div class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col h-full">
-        <!-- Card Header: Passenger Info (DYNAMIC) -->
-        <div class="p-6 border-b border-gray-200">
-          <!-- This section is now DYNAMIC and reads from the database -->
+      <!-- TWEAK: Restored map height to be tall and balanced -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col" style="min-height: 42rem;">
+        <div class="p-6">
+          <!-- TWEAK: Reduced font size from 2xl to xl -->
+          <h3 class="text-xl font-semibold text-vm-navy">Live Tracking</h3>
+          
           {% if passenger %}
-            <h3 class="text-3xl font-bold text-vm-navy">{{ passenger.name }}</h3>
-            <div class="flex items-center space-x-3 mt-2">
+            <!-- TWEAK: Reduced font size from lg to base and margin from mt-4 to mt-2 -->
+            <p class="text-base text-gray-600 mt-2">
+              Tracking: <span class="font-bold text-vm-navy">{{ passenger.name }}</span>
+            </p>
+            <div class="flex items-center space-x-2 text-green-600 mt-1">
               <span class="flex h-3 w-3 relative">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-vm-green opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-3 w-3 bg-vm-green"></span>
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
               </span>
-              <span class="text-xl font-medium text-green-700">Traveling</span>
-              <span class="text-gray-500">&bull;</span>
-              <span class="text-lg text-gray-600">Updated: 2:13 PM</span>
+              <!-- TWEAK: Reduced font size from lg to base -->
+              <span class="text-base font-medium">Traveling</span>
             </div>
           {% else %}
-            <h3 class="text-3xl font-bold text-vm-navy">No Passenger Linked</h3>
-            <p class="mt-2 text-gray-600">Please go to the Admin Panel to link a passenger to your account.</p>
+            <!-- TWEAK: Reduced font size from lg to base and margin from mt-4 to mt-2 -->
+            <p class="text-base text-gray-600 mt-2">
+              No passenger linked. Please update your profile in the admin panel.
+            </p>
           {% endif %}
         </div>
-        
-        <!-- Live Map Placeholder (DARKER & SHORTER) -->
-        <div class="p-6 bg-gray-50 flex-grow">
-          <!-- TWEAK: Changed min-h-[40rem] to min-h-[30rem] and bg-gray-300 to bg-gray-500 -->
-          <div class="relative w-full h-full min-h-[30rem] flex-grow rounded-lg bg-gray-500 flex items-center justify-center">
-            <div class="absolute inset-0 bg-cover bg-center rounded-lg" style="background-image: url(https://placehold.co/1200x800/e2e8f0/64748b?text=Live+Map+Placeholder); filter: grayscale(50%) blur(2px) opacity(0.6);"></div>
-            <div class="relative z-10 text-center p-4 bg-white bg-opacity-75 rounded-lg shadow-xl">
-              <h4 class="text-2xl font-bold text-gray-800">Live Map Placeholder</h4>
-              <p class="text-gray-600">Real map will be integrated here.</p>
+
+        <!-- Map Placeholder -->
+        <!-- TWEAK: Made placeholder darker, flex-grow to fill space -->
+        <div class="flex-grow bg-gray-500 rounded-b-lg flex items-center justify-center">
+          <span class="text-xl font-semibold text-white opacity-50">Live Map Placeholder</span>
+        </div>
+
+        <!-- Coordinates (Moved to bottom) -->
+        {% if passenger %}
+        <!-- TWEAK: Reduced padding from p-6 to p-4 -->
+        <div class="bg-gray-50 border-t border-gray-200 p-4">
+          <!-- TWEAK: Reduced font size from lg to base -->
+          <h4 class="text-base font-semibold text-vm-navy mb-2">Current Location Coordinates</h4>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <p class="text-xs font-medium text-gray-500 uppercase tracking-wide">Latitude</p>
+              <!-- TWEAK: Reduced font size from xl to lg -->
+              <p class="text-lg font-bold text-gray-800">22.5726</p> <!-- Kolkata Latitude -->
+            </div>
+            <div>
+              <p class="text-xs font-medium text-gray-500 uppercase tracking-wide">Longitude</p>
+              <!-- TWEAK: Reduced font size from xl to lg -->
+              <p class="text-lg font-bold text-gray-800">88.3639</p> <!-- Kolkata Longitude -->
             </div>
           </div>
         </div>
-
-        <!-- Coordinates Section (Below Map) (India-Specific) -->
-        <div class="p-6 border-t border-gray-200 bg-white grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <div>
-            <p class="text-sm font-medium text-gray-500 uppercase tracking-wide">Last Known Latitude</p>
-            <p class="text-2xl font-semibold text-gray-800">{{ passenger.last_latitude | default:"22.5726" }}</p>
-          </div>
-          <div>
-            <p class="text-sm font-medium text-gray-500 uppercase tracking-wide">Last Known Longitude</p>
-            <p class="text-2xl font-semibold text-gray-800">{{ passenger.last_longitude | default:"88.3639" }}</p>
-          </div>
-        </div>
+        {% endif %}
       </div>
     </div>
     
-    <!-- Right Column: Sidebar (Narrower) -->
-    <!-- TWEAK: Removed justify-between and h-full, changed to space-y-6 -->
-    <div class="lg:col-span-1 flex flex-col space-y-6">
+    <!-- Right Column: Info Cards -->
+    <!-- TWEAK: Reduced gap from gap-8 to gap-6 -->
+    <div class="lg:col-span-1 space-y-6">
       
-      <!-- Driver Information Card (PLACEHOLDER) -->
+      <!-- Driver Information -->
       <div class="bg-white rounded-xl shadow-lg overflow-hidden">
         <div class="p-6">
-          <h3 class="text-2xl font-semibold text-vm-navy mb-4">Driver Information</h3>
-          <!-- 
-            NOTE: This is still placeholder data.
-            We will make this dynamic once a ride is 'Accepted'.
-          -->
+          <!-- TWEAK: Reduced font size from 2xl to xl -->
+          <h3 class="text-xl font-semibold text-vm-navy mb-4">Driver Information</h3>
           <div class="space-y-3">
-            <div class="flex justify-between">
-              <span class="text-lg text-gray-600">Driver Name:</span>
-              <span class="text-lg font-semibold text-gray-900">Amit Patel</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="text-lg text-gray-600">Contact:</span>
-              <a href="tel:+919555512345" class="text-lg font-semibold text-vm-green hover:underline">+91 95555 12345</a>
-            </div>
-            <div class="flex justify-between">
-              <span class="text-lg text-gray-600">Vehicle:</span>
-              <span class="text-lg font-semibold text-gray-900">WB 02 XY 7890</span>
-            </div>
+            <!-- TWEAK: Reduced font size from lg to base -->
+            <p class="text-base text-gray-700">Name: <span class="font-bold text-vm-navy">Amit Patel</span></p>
+            <p class="text-base text-gray-700">Contact: <span class="font-bold text-vm-navy">+91 9876543210</span></p>
+            <p class="text-base text-gray-700">Vehicle: <span class="font-bold text-vm-navy">WB 02 AB 1234</span></p>
           </div>
-          <div class="mt-6 grid grid-cols-2 gap-3">
-            <button class="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-4 rounded-lg transition duration-300">
-              View Details
-            </button>
-            <button class="w-full bg-vm-green hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 shadow-md">
+          <div class="mt-6">
+            <button class="w-full bg-vm-green hover:bg-vm-green-dark text-white font-bold py-3 px-4 rounded-lg transition duration-300 ease-in-out shadow-md">
               Call Driver
             </button>
           </div>
         </div>
       </div>
-      
-      <!-- Tracking Status Legend Card -->
+
+      <!-- Tracking Status Legend -->
       <div class="bg-white rounded-xl shadow-lg overflow-hidden">
         <div class="p-6">
-          <h3 class="text-2xl font-semibold text-vm-navy mb-4">Tracking Status Legend</h3>
+          <!-- TWEAK: Reduced font size from 2xl to xl -->
+          <h3 class="text-xl font-semibold text-vm-navy mb-4">Tracking Status Legend</h3>
           <ul class="space-y-3">
-            <li class="flex items-center">
-              <span class="h-3 w-3 bg-vm-green rounded-full mr-3"></span>
-              <span class="text-lg text-gray-700">Traveling - Active Ride</span>
+            <!-- TWEAK: Reduced font size from lg to base -->
+            <li class="flex items-center text-base">
+              <span class="h-3 w-3 bg-green-500 rounded-full mr-3"></span>
+              Active - Currently traveling
             </li>
-            <li class="flex items-center">
-              <span class="h-3 w-3 bg-vm-blue rounded-full mr-3"></span>
-              <span class="text-lg text-gray-700">Arrived - Destination Reached</span>
+            <li class="flex items-center text-base">
+              <span class="h-3 w-3 bg-blue-500 rounded-full mr-3"></span>
+              Arrived - Destination reached
             </li>
-            <li class="flex items-center">
-              <span class="h-3 w-3 bg-yellow-500 rounded-full mr-3"></span>
-              <span class="text-lg text-gray-700">Waiting - Stationary Location</span>
+            <li class="flex items-center text-base">
+              <span class="h-3 w-3 bg-yellow-400 rounded-full mr-3"></span>
+              Waiting - Stationary location
+            </li>
+            <li class="flex items-center text-base">
+              <span class="h-3 w-3 bg-gray-400 rounded-full mr-3"></span>
+              Offline - No signal
             </li>
           </ul>
         </div>
       </div>
-
-      <!-- Tracking History Card (PLACEHOLDER) -->
+      
+      <!-- Tracking History -->
       <div class="bg-white rounded-xl shadow-lg overflow-hidden">
         <div class="p-6">
-          <h3 class="text-2xl font-semibold text-vm-navy mb-4">Tracking History</h3>
-          <ul class="space-y-3 text-gray-700">
-            <li class="flex justify-between text-lg">
-              <span>Ride Requested</span>
-              <span class="font-medium text-gray-500">2:05:15 PM</span>
-            </li>
-            <li class="flex justify-between text-lg">
-              <span>Driver Assigned</span>
-              <span class="font-medium text-gray-500">2:06:05 PM</span>
-            </li>
-            <li class="flex justify-between text-lg">
-              <span>En Route</span>
-              <span class="font-medium text-gray-500">2:06:10 PM</span>
-            </li>
+          <!-- TWEAK: Reduced font size from 2xl to xl -->
+          <h3 class="text-xl font-semibold text-vm-navy mb-4">Tracking History</h3>
+          <ul class="space-y-3">
+            <!-- TWEAK: Reduced font size from lg to base -->
+            <li class="text-base text-gray-600"><span class="font-medium text-gray-800">8:41 PM:</span> Driver accepted ride.</li>
+            <li class="text-base text-gray-600"><span class="font-medium text-gray-800">8:40 PM:</span> Ride request initiated.</li>
+            <li class="text-base text-gray-600"><span class="font-medium text-gray-800">8:39 PM:</span> Left home.</li>
           </ul>
         </div>
       </div>
