@@ -1,157 +1,150 @@
 {% extends 'main/base.html' %}
 
-{% block title %}Guardian Dashboard - VisionMate{% endblock %}
+{% block title %}Guardian Dashboard{% endblock %}
 
 {% block content %}
-<!-- Main Content Area -->
-<main class="flex-grow max-w-7xl mx-auto w-full py-8 px-4 sm:px-6 lg:px-8">
+<div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+  
+  <div class="text-center mb-12">
+    <h1 class="text-4xl font-extrabold text-vm-navy sm:text-5xl">
+      Guardian Dashboard
+    </h1>
+    <p class="mt-4 text-xl text-gray-600">
+      Welcome, <span class="font-semibold">{{ request.user.first_name | default:request.user.username }}</span>!
+    </p>
+  </div>
 
-    <!-- Header -->
-    <div class="mb-8 flex justify-between items-center">
-        <div>
-            <h1 class="text-3xl font-bold text-vm-navy">Guardian Dashboard</h1>
+  <!-- Main Content Grid -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    
+    <!-- Left Column: Live Map (Wider) -->
+    <div class="lg:col-span-2">
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col h-full">
+        <!-- Card Header: Passenger Info (DYNAMIC) -->
+        <div class="p-6 border-b border-gray-200">
+          <!-- This section is now DYNAMIC and reads from the database -->
+          {% if passenger %}
+            <h3 class="text-3xl font-bold text-vm-navy">{{ passenger.name }}</h3>
+            <div class="flex items-center space-x-3 mt-2">
+              <span class="flex h-3 w-3 relative">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-vm-green opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-vm-green"></span>
+              </span>
+              <span class="text-xl font-medium text-green-700">Traveling</span>
+              <span class="text-gray-500">&bull;</span>
+              <span class="text-lg text-gray-600">Updated: 2:13 PM</span>
+            </div>
+          {% else %}
+            <h3 class="text-3xl font-bold text-vm-navy">No Passenger Linked</h3>
+            <p class="mt-2 text-gray-600">Please go to the Admin Panel to link a passenger to your account.</p>
+          {% endif %}
         </div>
-        <button class="bg-green-600 text-white hover:bg-green-700 px-5 py-2 rounded-md font-medium shadow-sm transition-colors duration-200">
-            Start Tracking
-        </button>
-    </div>
-
-    <!-- Main Dashboard Grid: 2/3 wide left, 1/3 narrow right on large screens -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
-        <!-- LEFT COLUMN (2/3 Width: Live Tracking Map) -->
-        <!-- Make this column a flexible container (flex flex-col) so its children can stretch -->
-        <div class="lg:col-span-2 flex flex-col space-y-8">
-            
-            <!-- Live Tracking Map Card - Use flex-grow and h-full to match right column height -->
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-shadow duration-300 hover:shadow-xl flex-grow flex flex-col">
-                
-                <!-- Header/Status Bar -->
-                <div class="p-4 pb-3 border-b border-gray-100 flex justify-between items-start flex-shrink-0">
-                    <div>
-                        <h3 class="text-xl font-semibold text-vm-navy">Alex Johnson (Daughter)</h3>
-                        <div class="flex items-center mt-1">
-                            <span class="h-3 w-3 rounded-full bg-green-500 mr-2 animate-pulse"></span>
-                            <span class="text-green-700 font-medium">Traveling</span>
-                        </div>
-                    </div>
-                    <span class="text-xs text-gray-500 font-medium bg-gray-100 px-2 py-0.5 rounded-full">Last Updated: 8:50:39 PM</span>
-                </div>
-                
-                <!-- Map and Location Details -->
-                <!-- Use flex-grow here to make this section fill the remaining vertical space -->
-                <div class="p-4 flex flex-col flex-grow">
-                    
-                    <!-- Map Placeholder - This must flex-grow to take up the space -->
-                    <div class="flex-grow bg-gray-200 rounded-lg overflow-hidden relative border border-gray-300 mb-4 min-h-[12rem]">
-                        <!-- Simulate a map visual -->
-                        <div class="absolute inset-0 bg-cover bg-center opacity-70" style="background-image: url('https://placehold.co/800x600/6B7280/F9FAFB?text=LIVE+MAP+FEED');"></div>
-                        <div class="absolute inset-0 flex items-center justify-center backdrop-blur-sm">
-                            <span class="text-xl font-semibold text-gray-800 bg-white p-3 rounded-md shadow-xl">Live Map Placeholder</span>
-                            <!-- Marker for current location -->
-                            <div class="absolute top-1/2 left-1/2 -mt-4 -ml-4 h-8 w-8 bg-vm-red rounded-full ring-4 ring-white shadow-xl animate-pulse"></div>
-                        </div>
-                    </div>
-                    
-                    <!-- Location Coordinates - This is fixed height at the bottom -->
-                    <h4 class="text-lg font-semibold text-gray-800 mb-3 flex-shrink-0">Current Location Coordinates</h4>
-                    <div class="bg-gray-50 p-3 rounded-md grid grid-cols-2 gap-4 flex-shrink-0">
-                        <div>
-                            <label class="text-sm font-medium text-gray-500">Latitude</label>
-                            <p class="text-lg font-mono text-gray-900">40.712800</p>
-                        </div>
-                        <div>
-                            <label class="text-sm font-medium text-gray-500">Longitude</label>
-                            <p class="text-lg font-mono text-gray-900">-74.006000</p>
-                        </div>
-                    </div>
-                    
-                </div>
+        <!-- Live Map Placeholder -->
+        <div class="p-6 bg-gray-50 flex-grow">
+          <div class="relative w-full h-full min-h-[40rem] flex-grow rounded-lg bg-gray-300 flex items-center justify-center">
+            <div class="absolute inset-0 bg-cover bg-center rounded-lg" style="background-image: url(httpsSame-day delivery
+A same-day delivery service ensures that customers receive their parcels on the day they make the purchase, typically within a few hours or by the end of the business day.: url(https://placehold.co/1200x800/e2e8f0/64748b?text=Live+Map+Placeholder); filter: grayscale(50%) blur(2px); opacity: 0.6;"></div>
+            <div class="relative z-10 text-center p-4 bg-white bg-opacity-75 rounded-lg shadow-xl">
+              <h4 class="text-2xl font-bold text-gray-800">Live Map Placeholder</h4>
+              <p class="text-gray-600">Real map will be integrated here.</p>
             </div>
+          </div>
         </div>
 
-        <!-- RIGHT COLUMN (1/3 Width: Sidebar) -->
-        <!-- Use Flex column and h-full to distribute space evenly and align vertically -->
-        <div class="lg:col-span-1 flex flex-col space-y-6"> 
-            
-            <!-- 1. Driver Information Card -->
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-shadow duration-300 hover:shadow-xl flex-shrink-0">
-                <div class="p-4">
-                    <h4 class="text-xl font-semibold text-gray-800 mb-4">Driver Information</h4>
-                    <div class="space-y-3">
-                        <div class="flex justify-between">
-                            <span class="text-gray-600">Driver Name:</span>
-                            <span class="font-medium text-gray-900">James Wilson</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-gray-600">Contact:</span>
-                            <span class="font-medium text-blue-600">+1 (555) 111-2222</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-gray-600">Vehicle:</span>
-                            <span class="font-medium text-gray-900">NY-ABC-1234</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="p-3 bg-gray-50 grid grid-cols-2 gap-3"> 
-                    <a href="#" class="block w-full text-center bg-gray-200 text-gray-800 hover:bg-gray-300 px-4 py-3 rounded-md font-medium transition-colors duration-200">
-                        View Details
-                    </a>
-                    <a href="#" class="block w-full text-center bg-green-600 text-white hover:bg-green-700 px-4 py-3 rounded-md font-medium shadow-sm transition-colors duration-200">
-                        Call Driver
-                    </a>
-                </div>
-            </div>
-
-            <!-- 2. Tracking Status Legend Card -->
-            <div class="bg-white rounded-xl shadow-lg p-4 flex-shrink-0">
-                <h4 class="text-xl font-semibold text-gray-800 mb-4">Tracking Status Legend</h4>
-                <ul class="space-y-3 text-sm">
-                    <li class="flex items-center">
-                        <span class="h-3 w-3 rounded-full bg-green-500 mr-3"></span>
-                        <span class="text-gray-700">Traveling - Active Ride</span>
-                    </li>
-                    <li class="flex items-center">
-                        <span class="h-3 w-3 rounded-full bg-blue-500 mr-3"></span>
-                        <span class="text-gray-700">Arrived - Destination reached</span>
-                    </li>
-                    <li class="flex items-center">
-                        <span class="h-3 w-3 rounded-full bg-yellow-500 mr-3"></span>
-                        <span class="text-gray-700">Waiting - Driver en route</span>
-                    </li>
-                    <li class="flex items-center">
-                        <span class="h-3 w-3 rounded-full bg-red-500 mr-3"></span>
-                        <span class="text-gray-700">Offline / Error</span>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- 3. Tracking History Card (This card now flex-grows to fill the middle space) -->
-            <div class="bg-white rounded-xl shadow-lg p-4 flex-grow">
-                <h4 class="text-xl font-semibold text-gray-800 mb-4">Tracking History</h4>
-                <div class="space-y-4 text-sm">
-                    <div class="flex items-center">
-                        <div class="w-2 h-2 rounded-full bg-green-500 mr-3"></div>
-                        <span class="text-gray-700"><span class="font-medium text-gray-900">8:50 PM:</span> Left pickup location.</span>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="w-2 h-2 rounded-full bg-blue-500 mr-3"></div>
-                        <span class="text-gray-700"><span class="font-medium text-gray-900">8:41 PM:</span> Driver accepted ride.</span>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="w-2 h-2 rounded-full bg-yellow-500 mr-3"></div>
-                        <span class="text-gray-700"><span class="font-medium text-gray-900">8:40 PM:</span> Ride request received.</span>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="w-2 h-2 rounded-full bg-gray-400 mr-3"></div>
-                        <span class="text-gray-700"><span class="font-medium text-gray-900">8:39 PM:</span> Tracking initiated.</span>
-                    </div>
-                </div>
-            </div>
-
+        <!-- Coordinates Section (Below Map) (India-Specific) -->
+        <div class="p-6 border-t border-gray-200 bg-white grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div>
+            <p class="text-sm font-medium text-gray-500 uppercase tracking-wide">Last Known Latitude</p>
+            <p class="text-2xl font-semibold text-gray-800">{{ passenger.last_latitude | default:"22.5726" }}</p>
+          </div>
+          <div>
+            <p class="text-sm font-medium text-gray-500 uppercase tracking-wide">Last Known Longitude</p>
+            <p class="text-2xl font-semibold text-gray-800">{{ passenger.last_longitude | default:"88.3639" }}</p>
+          </div>
         </div>
+      </div>
+    </div>
+    
+    <!-- Right Column: Sidebar (Narrower) -->
+    <div class="lg:col-span-1 flex flex-col justify-between space-y-8 h-full">
+      
+      <!-- Driver Information Card (PLACEHOLDER) -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="p-6">
+          <h3 class="text-2xl font-semibold text-vm-navy mb-4">Driver Information</h3>
+          <!-- 
+            NOTE: This is still placeholder data.
+            We will make this dynamic once a ride is 'Accepted'.
+          -->
+          <div class="space-y-3">
+            <div class="flex justify-between">
+              <span class="text-lg text-gray-600">Driver Name:</span>
+              <span class="text-lg font-semibold text-gray-900">Amit Patel</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-lg text-gray-600">Contact:</span>
+              <a href="tel:+919555512345" class="text-lg font-semibold text-vm-green hover:underline">+91 95555 12345</a>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-lg text-gray-600">Vehicle:</span>
+              <span class="text-lg font-semibold text-gray-900">WB 02 XY 7890</span>
+            </div>
+          </div>
+          <div class="mt-6 grid grid-cols-2 gap-3">
+            <button class="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-4 rounded-lg transition duration-300">
+              View Details
+            </button>
+            <button class="w-full bg-vm-green hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 shadow-md">
+              Call Driver
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Tracking Status Legend Card -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="p-6">
+          <h3 class="text-2xl font-semibold text-vm-navy mb-4">Tracking Status Legend</h3>
+          <ul class="space-y-3">
+            <li class="flex items-center">
+              <span class="h-3 w-3 bg-vm-green rounded-full mr-3"></span>
+              <span class="text-lg text-gray-700">Traveling - Active Ride</span>
+            </li>
+            <li class="flex items-center">
+              <span class="h-3 w-3 bg-vm-blue rounded-full mr-3"></span>
+              <span class="text-lg text-gray-700">Arrived - Destination Reached</span>
+            </li>
+            <li class="flex items-center">
+              <span class="h-3 w-3 bg-yellow-500 rounded-full mr-3"></span>
+              <span class="text-lg text-gray-700">Waiting - Stationary Location</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Tracking History Card (PLACEHOLDER) -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="p-6">
+          <h3 class="text-2xl font-semibold text-vm-navy mb-4">Tracking History</h3>
+          <ul class="space-y-3 text-gray-700">
+            <li class="flex justify-between text-lg">
+              <span>Ride Requested</span>
+              <span class="font-medium text-gray-500">2:05:15 PM</span>
+            </li>
+            <li class="flex justify-between text-lg">
+              <span>Driver Assigned</span>
+              <span class="font-medium text-gray-500">2:06:05 PM</span>
+            </li>
+            <li class="flex justify-between text-lg">
+              <span>En Route</span>
+              <span class="font-medium text-gray-500">2:06:10 PM</span>
+            </li>
+          </ul>
+        </div>
+      </div>
 
     </div>
-
-</main>
+  </div>
+</div>
 {% endblock %}

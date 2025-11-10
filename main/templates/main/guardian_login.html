@@ -1,60 +1,60 @@
 {% extends 'main/base.html' %}
 
-{% block title %}Guardian Login - VisionMate{% endblock %}
+{% block title %}Guardian Login{% endblock %}
 
 {% block content %}
-<!-- Login Form Section -->
-<div class="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full">
-        <div class="bg-white p-8 md:p-10 rounded-xl shadow-lg">
-            <div class="space-y-6">
+<div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8">
+        <div>
+            <h2 class="mt-6 text-center text-4xl font-extrabold text-vm-navy">
+                Guardian Login
+            </h2>
+            <p class="mt-2 text-center text-lg text-gray-600">
+                Monitor your loved one's journey
+            </p>
+        </div>
+
+        <!-- Error Message Display -->
+        {% if messages %}
+        <div class="bg-red-100 border border-vm-red text-vm-red px-4 py-3 rounded-lg relative" role="alert">
+            <strong class="font-bold">Login Failed:</strong>
+            <ul class="mt-1 list-disc list-inside">
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <!-- Login Form -->
+        <form class="mt-8 space-y-6" action="{% url 'main:guardian_login' %}" method="POST">
+            
+            <!-- CSRF Token (Security) -->
+            {% csrf_token %}
+
+            <input type="hidden" name="remember" value="true">
+            <div class="rounded-md shadow-sm -space-y-px">
                 <div>
-                    <div class="text-center">
-                        <h2 class="text-3xl font-bold text-vm-navy">
-                            Guardian Login
-                        </h2>
-                        <p class="mt-2 text-gray-600">
-                            Monitor and track your loved ones safely
-                        </p>
-                    </div>
-
-                    {% if messages %}
-                        <div class="mt-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                            {% for message in messages %}
-                                <span class="block sm:inline">{{ message }}</span>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-
-                    <!-- Login Form -->
-                    <form class="mt-8 space-y-6" action="{% url 'main:guardian_login' %}" method="POST">
-                        {% csrf_token %}
-                        <input type="hidden" name="remember" value="true">
-                        <div class="rounded-md shadow-sm -space-y-px">
-                            <div>
-                                <label for="guardian-user-id" class="block text-sm font-medium text-gray-700">Guardian User ID</label>
-                                <input id="guardian-user-id" name="guardian_user_id" type="text" autocomplete="username" required
-                                       class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
-                                       placeholder="Enter your user ID">
-                            </div>
-                            <div class="pt-4">
-                                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                                <input id="password" name="password" type="password" autocomplete="current-password" required
-                                       class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
-                                       placeholder="Enter your password">
-                            </div>
-                        </div>
-
-                        <div>
-                            <button type="submit"
-                                    class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
-                                Login as Guardian
-                            </button>
-                        </div>
-                    </form>
+                    <label for="guardian-user-id" class="sr-only">Guardian User ID</label>
+                    <input id="guardian-user-id" name="guardian_user_id" type="text" autocomplete="username" required 
+                           class="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-vm-green focus:border-vm-green focus:z-10 sm:text-lg" 
+                           placeholder="Guardian User ID">
+                </div>
+                <div>
+                    <label for="guardian-password" class="sr-only">Password</label>
+                    <input id="guardian-password" name="password" type="password" autocomplete="current-password" required 
+                           class="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-vm-green focus:border-vm-green focus:z-10 sm:text-lg" 
+                           placeholder="Password">
                 </div>
             </div>
-        </div>
+
+            <div>
+                <button type="submit" 
+                        class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-lg font-medium rounded-md text-white bg-vm-green hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-vm-green shadow-md transition-colors duration-300">
+                    Login as Guardian
+                </button>
+            </div>
+        </form>
     </div>
 </div>
 {% endblock %}
