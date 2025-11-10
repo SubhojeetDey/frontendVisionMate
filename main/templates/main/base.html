@@ -1,111 +1,104 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- The title will be changeable by other pages -->
+    <!-- Use a block for the title -->
     <title>{% block title %}VisionMate{% endblock %}</title>
     
-    <!-- All styles are now in ONE place -->
+    <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Load Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Configure Tailwind -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                    },
                     colors: {
-                        'vm-navy': '#192a56',
-                        'vm-bg': '#f4f7f6',
-                        'vm-blue': '#3b82f6',
-                        'vm-green': '#22c55e',
-                        'vm-red': '#e74c3c',
-                    }
-                }
-            }
+                        // Define our color scheme
+                        'vm-blue': {
+                            DEFAULT: '#007aff', // A bright, accessible blue
+                            'dark': '#005bb5',
+                        },
+                        'vm-green': {
+                            DEFAULT: '#34c759', // A clear, positive green
+                            'dark': '#289b45',
+                        },
+                        'vm-orange': {
+                            DEFAULT: '#ff9500', // A warm, attentio-grabbing orange
+                            'dark': '#cc7a00',
+                        },
+                        'vm-red': {
+                            DEFAULT: '#ff3b30', // For errors or critical alerts
+                            'dark': '#cc2e26',
+                        },
+                    },
+                },
+            },
         }
     </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-        }
-        /* Custom scrollbar for consistency */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #ccc;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #aaa;
+            background-color: #f4f7fa; /* A very light, clean gray for the page background */
         }
     </style>
-    <!-- Allow extra head items (like custom scripts) -->
     {% block head %}{% endblock %}
 </head>
-<body class="bg-vm-bg min-h-screen flex flex-col text-gray-900">
+<body class="flex flex-col min-h-screen">
 
-    <!-- Header Navigation -->
-    <nav class="bg-white shadow-sm sticky top-0 z-50">
+    <!-- Header / Navigation Bar -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
+            <div class="flex justify-between items-center h-20">
                 
-                <!-- Brand Logo & Name -->
-                <a href="{% url 'main:home' %}" class="flex-shrink-0 flex items-center gap-2">
-                    <!-- Simple SVG Logo -->
-                    <svg class="h-8 w-8 text-vm-blue" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2C16.9706 2 21 6.02944 21 11C21 15.9706 16.9706 20 12 20C7.02944 20 3 15.9706 3 11C3 6.02944 7.02944 2 12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M12 14C13.6569 14 15 12.6569 15 11C15 9.34315 13.6569 8 12 8C10.3431 8 9 9.34315 9 11C9 12.6569 10.3431 14 12 14Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M20.555 11H22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M2 11H3.445" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M12 2V3.445" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M12 20.555V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    <span class="text-2xl font-bold text-vm-navy">VisionMate</span>
+                <!-- Logo -->
+                <a href="{% url 'main:home' %}" class="flex items-center space-x-3 flex-shrink-0">
+                    
+                    <!-- TWEAK: New Minimalist Static "VM" Logo -->
+                    <div class="h-9 w-9 flex items-center justify-center rounded-lg bg-vm-blue text-white">
+                        <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 4L10 16L12 12L14 16L20 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    
+                    <span class="text-2xl font-bold text-gray-800">VisionMate</span>
                 </a>
-                
-                <!-- Right Side Navigation: This is now DYNAMIC! -->
-                <div class="flex items-center space-x-4">
-                    {% if user.is_authenticated %}
-                        <!-- User is LOGGED IN -->
-                        <span class="text-gray-700 text-sm hidden sm:block">
-                            Welcome, <strong class="font-medium">{{ request.user.first_name | default:request.user.username }}</strong>
-                        </span>
-                        
-                        <!-- Check which group the user is in -->
-                        {% for group in user.groups.all %}
-                            {% if group.name == 'Drivers' %}
-                                <a href="{% url 'main:driver_dashboard' %}" 
-                                   class="text-gray-700 bg-blue-100 hover:bg-blue-200 px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200">
-                                   Dashboard
-                                </a>
-                            {% elif group.name == 'Guardians' %}
-                                <a href="{% url 'main:guardian_dashboard' %}" 
-                                   class="text-gray-700 bg-green-100 hover:bg-green-200 px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200">
-                                   Dashboard
-                                </a>
-                            {% endif %}
-                        {% endfor %}
 
-                        <a href="{% url 'main:logout' %}" 
-                           class="text-gray-700 bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200">
-                           Logout
+                <!-- Navigation Links -->
+                <div class="flex items-center space-x-4">
+                    {% if request.user.is_authenticated %}
+                        <!-- User is LOGGED IN -->
+                        <span class="hidden sm:inline text-gray-700">
+                            Welcome, <span class="font-semibold">{{ request.user.first_name | default:request.user.username }}</span>!
+                        </span>
+
+                        {% if request.user.groups.all.0.name == 'Drivers' %}
+                            <a href="{% url 'main:driver_dashboard' %}" class="text-gray-700 hover:text-vm-blue font-medium px-3 py-2 rounded-md">Dashboard</a>
+                        {% elif request.user.groups.all.0.name == 'Guardians' %}
+                            <a href="{% url 'main:guardian_dashboard' %}" class="text-gray-700 hover:text-vm-green font-medium px-3 py-2 rounded-md">Dashboard</a>
+                        {% endif %}
+                        
+                        <a href="{% url 'main:logout' %}" class="bg-vm-red hover:bg-vm-red-dark text-white font-semibold py-2 px-4 rounded-lg transition duration-300">
+                            Logout
                         </a>
 
                     {% else %}
                         <!-- User is LOGGED OUT -->
-                        <a href="{% url 'main:driver_login' %}" 
-                           class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
-                           Driver Login
+                        <a href="{% url 'main:driver_login' %}" class="text-gray-700 hover:text-vm-blue font-medium px-3 py-2 rounded-md">
+                            Driver Login
                         </a>
-                        <a href="{% url 'main:guardian_login' %}" 
-                           class="text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md text-sm font-medium shadow-sm transition-colors duration-200">
-                           Guardian Login
+                        <a href="{% url 'main:guardian_login' %}" class="bg-vm-green hover:bg-vm-green-dark text-white font-semibold py-2 px-4 rounded-lg transition duration-300">
+                            Guardian Login
                         </a>
                     {% endif %}
                 </div>
@@ -114,18 +107,18 @@
     </nav>
 
     <!-- Main Content Area -->
-    <!-- This 'block' is the "hole" that other pages will fill. -->
-    <main class="flex-grow w-full">
+    <!-- TWEAK: Added 'flex flex-col' so child elements can use flex-grow -->
+    <main class="flex-grow flex flex-col">
+        <!-- This is the empty "box" that your other pages will fill -->
         {% block content %}
-        <!-- Child template content goes here -->
         {% endblock %}
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200 mt-16">
-        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center text-gray-500">
+    <footer class="bg-gray-800 text-gray-400 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center">
             <p>&copy; {% now "Y" %} VisionMate. All rights reserved.</p>
-            <p class="text-sm mt-1">Safe ride-sharing for everyone.</p>
+            <p class="text-sm mt-1">Safe ride-sharing with peace of mind.</p>
         </div>
     </footer>
 
