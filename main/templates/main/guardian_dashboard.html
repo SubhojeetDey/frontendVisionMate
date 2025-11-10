@@ -2,11 +2,32 @@
 
 {% block title %}Guardian Dashboard{% endblock %}
 
+<!-- TWEAK: Add custom CSS for animation in the 'head' block -->
+{% block head %}
+<style>
+  @keyframes pulse-border {
+    0%, 100% {
+      /* Use the --tw-shadow-color variable set by vm-green */
+      box-shadow: 0 0 0 0 var(--tw-shadow-color);
+    }
+    50% {
+      box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+    }
+  }
+  .tracking-active {
+    /* Sets the shadow color variable to our green */
+    --tw-shadow-color: #34c759; /* vm-green */
+    animation: pulse-border 2s infinite;
+  }
+</style>
+{% endblock %}
+
+
 {% block content %}
 <div class="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
   
   <div class="text-center mb-10">
-    <h1 class="text-3xl font-extrabold text-vm-navy sm:text-4xl">
+    <h1 class="text-3xl font-extrabold text-gray-800 sm:text-4xl">
       Guardian Dashboard
     </h1>
     <p class="mt-2 text-lg text-gray-600">
@@ -19,18 +40,28 @@
     
     <!-- Left Column: Live Tracking -->
     <div class="lg:col-span-2">
-      <!-- TWEAK: Extended height to align with right column -->
-      <div class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col" style="min-height: 48rem;">
+      <!-- TWEAK: Reduced height slightly to align with right column -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col" style="min-height: 45rem;">
         
         <!-- --- 1. Text Content Area --- -->
         <div class="p-6">
-          <h3 class="text-xl font-semibold text-vm-navy">Live Tracking</h3>
           
           {% if passenger %}
-            <p class="text-base text-gray-600 mt-2">
-              Tracking: <span class="font-bold text-vm-navy">{{ passenger.name }}</span>
-            </p>
-            <div class="flex items-center space-x-2 text-green-600 mt-1">
+            <!-- TWEAK: Added flex container for name and button -->
+            <div class="flex justify-between items-center mb-2">
+              <!-- TWEAK: Passenger name is now the main heading -->
+              <h3 class="text-3xl font-bold text-gray-800">
+                {{ passenger.name }}
+              </h3>
+              
+              <!-- TWEAK: Added "Start Tracking" button -->
+              <button id="start-tracking-btn" class="bg-vm-green hover:bg-vm-green-dark text-white font-semibold py-2 px-5 rounded-lg transition duration-300 shadow-sm">
+                Start Tracking
+              </button>
+            </div>
+            
+            <!-- TWEAK: Adjusted spacing -->
+            <div class="flex items-center space-x-2 text-green-600">
               <span class="flex h-3 w-3 relative">
                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                 <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
@@ -46,7 +77,8 @@
 
         <!-- --- 2. Map Placeholder Area --- -->
         <div class="flex-grow flex flex-col px-6 pb-6">
-          <div class="w-full flex-grow bg-gray-500 rounded-lg flex items-center justify-center">
+          <!-- TWEAK: Added ID for JS targeting -->
+          <div id="map-placeholder" class="w-full flex-grow bg-gray-500 rounded-lg flex items-center justify-center transition-all duration-500">
             <!-- TWEAK: Increased font size to be clearly visible -->
             <span class="text-3xl font-semibold text-white opacity-50">Live Map Placeholder</span>
           </div>
@@ -55,7 +87,7 @@
         <!-- --- 3. Coordinates Area --- -->
         {% if passenger %}
         <div class="bg-gray-50 border-t border-gray-200 p-6">
-          <h4 class="text-base font-semibold text-vm-navy mb-2">Current Location Coordinates</h4>
+          <h4 class="text-base font-semibold text-gray-800 mb-2">Current Location Coordinates</h4>
           <div class="grid grid-cols-2 gap-4">
             <div>
               <p class="text-xs font-medium text-gray-500 uppercase tracking-wide">Latitude</p>
@@ -77,11 +109,11 @@
       <!-- Driver Information -->
       <div class="bg-white rounded-xl shadow-lg overflow-hidden">
         <div class="p-6">
-          <h3 class="text-xl font-semibold text-vm-navy mb-4">Driver Information</h3>
+          <h3 class="text-xl font-semibold text-gray-800 mb-4">Driver Information</h3>
           <div class="space-y-3">
-            <p class="text-base text-gray-700">Name: <span class="font-bold text-vm-navy">Amit Patel</span></p>
-            <p class="text-base text-gray-700">Contact: <span class="font-bold text-vm-navy">+91 9876543210</span></p>
-            <p class="text-base text-gray-700">Vehicle: <span class="font-bold text-vm-navy">WB 02 AB 1234</span></p>
+            <p class="text-base text-gray-700">Name: <span class="font-bold text-gray-800">Amit Patel</span></p>
+            <p class="text-base text-gray-700">Contact: <span class="font-bold text-gray-800">+91 9876543210</span></p>
+            <p class="text-base text-gray-700">Vehicle: <span class="font-bold text-gray-800">WB 02 AB 1234</span></p>
           </div>
           <div class="mt-6">
             <button class="w-full bg-vm-green hover:bg-vm-green-dark text-white font-bold py-3 px-4 rounded-lg transition duration-300 ease-in-out shadow-md">
@@ -94,7 +126,7 @@
       <!-- Tracking Status Legend -->
       <div class="bg-white rounded-xl shadow-lg overflow-hidden">
         <div class="p-6">
-          <h3 class="text-xl font-semibold text-vm-navy mb-4">Tracking Status Legend</h3>
+          <h3 class="text-xl font-semibold text-gray-800 mb-4">Tracking Status Legend</h3>
           <ul class="space-y-3">
             <li class="flex items-center text-base">
               <span class="h-3 w-3 bg-green-500 rounded-full mr-3"></span>
@@ -119,7 +151,7 @@
       <!-- Tracking History -->
       <div class="bg-white rounded-xl shadow-lg overflow-hidden">
         <div class="p-6">
-          <h3 class="text-xl font-semibold text-vm-navy mb-4">Tracking History</h3>
+          <h3 class="text-xl font-semibold text-gray-800 mb-4">Tracking History</h3>
           <ul class="space-y-3">
             <li class="text-base text-gray-600"><span class="font-medium text-gray-800">8:41 PM:</span> Driver accepted ride.</li>
             <li class="text-base text-gray-600"><span class="font-medium text-gray-800">8:40 PM:</span> Ride request initiated.</li>
@@ -131,4 +163,54 @@
     </div>
   </div>
 </div>
+
+<!-- TWEAK: Updated JavaScript to toggle tracking on and off -->
+<script>
+  document.addEventListener('DOMContentLoaded', (event) => {
+    
+    const trackButton = document.getElementById('start-tracking-btn');
+    const mapPlaceholder = document.getElementById('map-placeholder');
+
+    // State variable to keep track of tracking status
+    let isTracking = false;
+
+    if (trackButton && mapPlaceholder) {
+      
+      trackButton.addEventListener('click', () => {
+        
+        // Toggle the tracking state
+        isTracking = !isTracking;
+
+        if (isTracking) {
+          // --- START TRACKING ---
+          
+          // Add the animation class to the map
+          mapPlaceholder.classList.add('tracking-active');
+          
+          // Change button text and color to "Stop" (red)
+          trackButton.textContent = 'Stop Tracking';
+          trackButton.classList.remove('bg-vm-green', 'hover:bg-vm-green-dark');
+          trackButton.classList.add('bg-vm-red', 'hover:bg-vm-red-dark');
+
+          // Here you would also add the code to start fetching
+          // live location data from your API (e.g., in a setInterval)
+
+        } else {
+          // --- STOP TRACKING ---
+
+          // Remove the animation class from the map
+          mapPlaceholder.classList.remove('tracking-active');
+          
+          // Change button text and color back to "Start" (green)
+          trackButton.textContent = 'Start Tracking';
+          trackButton.classList.remove('bg-vm-red', 'hover:bg-vm-red-dark');
+          trackButton.classList.add('bg-vm-green', 'hover:bg-vm-green-dark');
+
+          // Here you would stop the live data fetch
+        }
+      });
+    }
+  });
+</script>
+
 {% endblock %}
