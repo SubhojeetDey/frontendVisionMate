@@ -92,7 +92,7 @@ def driver_dashboard(request):
     Ensures the user is a Driver.
     """
     # Redirect if a Guardian somehow gets here
-    
+    context = {}
     if not is_in_group(request.user, 'Drivers'):
         return redirect('main:home')
 
