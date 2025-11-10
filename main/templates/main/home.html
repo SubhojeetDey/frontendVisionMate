@@ -1,78 +1,179 @@
 {% extends 'main/base.html' %}
 
-{% block title %}Welcome - VisionMate{% endblock %}
+{% block title %}Welcome to VisionMate{% endblock %}
+
+{% block head %}
+<!-- TWEAK: Added custom CSS for fade-in animations -->
+<style>
+  @keyframes fade-in-down {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fade-in-up {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Classes to trigger the animations */
+  .animate-fade-in-down {
+    /* Set opacity to 0 so it can fade in */
+    opacity: 0; 
+    animation: fade-in-down 0.8s ease-out 0.2s forwards;
+  }
+  .animate-fade-in-up {
+    opacity: 0;
+    animation: fade-in-up 0.8s ease-out 0.4s forwards;
+  }
+  .animate-fade-in-up-delay {
+    opacity: 0;
+    animation: fade-in-up 0.8s ease-out 0.6s forwards;
+  }
+</style>
+{% endblock %}
 
 {% block content %}
-<div class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
-            
-    <!-- Welcome Hero Section -->
-    <div class="text-center mb-16">
-        <h1 class="text-5xl font-bold text-vm-navy sm:text-6xl">
-            Welcome to VisionMate
-        </h1>
-        <p class="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
-            Safe ride-sharing with real-time guardian tracking. Drive with confidence. Travel with peace of mind.
-        </p>
-        
-        <!-- Display logout message if it exists -->
-        {% if messages %}
-            <div class="mt-6 max-w-md mx-auto">
-                {% for message in messages %}
-                    {% if message.tags == 'success' %}
-                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-                        <span class="block sm:inline">{{ message }}</span>
-                    </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-        {% endif %}
+<div class="w-full">
+    
+    <!-- Hero Welcome Section -->
+    <!-- TWEAK: Added subtle gradient background -->
+    <div class="bg-gradient-to-b from-blue-50 to-gray-50">
+        <div class="max-w-7xl mx-auto py-20 px-4 sm:px-6 lg:py-28 lg:px-8 text-center">
+            <!-- TWEAK: Added animation class -->
+            <h1 class="text-4xl font-extrabold text-vm-navy sm:text-5xl animate-fade-in-down">
+                Welcome to VisionMate
+            </h1>
+            <!-- TWEAK: Added animation class -->
+            <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-600 animate-fade-in-up">
+                Safe ride-sharing with real-time guardian tracking. Drive with confidence. Travel with peace of mind.
+            </p>
+        </div>
     </div>
 
-    <!-- Login Cards Section -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-
-        <!-- For Drivers Card -->
-        <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden flex flex-col">
-            <div class="p-8 flex-grow">
-                <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 mb-6">
-                    <svg class="h-8 w-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.125-.504 1.125-1.125V14.25m-17.25 4.5v-1.875a3.375 3.375 0 0 1 3.375-3.375h9.75a3.375 3.375 0 0 1 3.375 3.375v1.875m-17.25 4.5h16.5M5.625 13.5v-1.875a3.375 3.375 0 0 1 3.375-3.375h9.75a3.375 3.375 0 0 1 3.375 3.375v1.875" />
-                    </svg>
+    <!-- Features Section (Login Cards) -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12">
+        <!-- TWEAK: Added animation class -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto animate-fade-in-up-delay">
+            
+            <!-- Driver Card -->
+            <!-- TWEAK: Added hover animations -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col transition-all duration-300 hover:shadow-2xl hover:-translate-y-2">
+                <div class="p-8 flex-grow">
+                    <div class="inline-flex items-center justify-center h-12 w-12 rounded-lg bg-blue-100 text-vm-blue mb-4">
+                        <!-- Icon: Steering Wheel -->
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 11.25a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a8.966 8.966 0 01-8.966-8.966 8.966 8.966 0 018.966-8.966 8.966 8.966 0 018.966 8.966 8.966 8.966 0 01-8.966 8.966zM12 7.5a.75.75 0 100-1.5.75.75 0 000 1.5z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18a.75.75 0 100-1.5.75.75 0 000 1.5zM15 9.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM9 9.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 15.75a.75.75 0 100-1.5.75.75 0 000 1.5z" />
+                        </svg>                          
+                    </div>
+                    <h3 class="text-xl font-semibold text-vm-navy">For Drivers</h3>
+                    <p class="mt-1 text-base text-gray-600">
+                        Accept ride requests, view passenger details, and manage your route efficiently.
+                    </p>
                 </div>
-                <h3 class="text-3xl font-semibold text-vm-navy mb-3">For Drivers</h3>
-                <p class="text-gray-600 text-lg">
-                    Accept ride requests, view passenger details, and manage your route efficiently.
-                </p>
+                <div class="p-6 bg-gray-50">
+                    <a href="{% url 'main:driver_login' %}" class="block w-full text-center px-6 py-3 bg-vm-blue hover:bg-vm-blue-dark text-white font-semibold rounded-lg shadow-md transition-colors duration-200">
+                        Driver Login
+                    </a>
+                </div>
             </div>
-            <div class="p-6 bg-gray-50">
-                <a href="{% url 'main:driver_login' %}" 
-                   class="block w-full text-center bg-vm-blue text-white hover:bg-blue-700 px-6 py-3 rounded-md font-medium shadow-sm text-lg transition-colors duration-200">
-                   Driver Login
-                </a>
+
+            <!-- Guardian Card -->
+            <!-- TWEAK: Added hover animations -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col transition-all duration-300 hover:shadow-2xl hover:-translate-y-2">
+                <div class="p-8 flex-grow">
+                    <div class="inline-flex items-center justify-center h-12 w-12 rounded-lg bg-green-100 text-vm-green mb-4">
+                        <!-- Icon: Shield/User -->
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.956 11.956 0 0112 3c2.37 0 4.54.78 6.24 2.114M15.76 15.76A11.96 11.96 0 0112 18.25c-2.37 0-4.54-.78-6.24-2.114m12.48-3.514A11.953 11.953 0 0118.25 12c0 2.37-.78 4.54-2.114 6.24m-3.514 3.514A11.953 11.953 0 0112 18.25c-2.37 0-4.54-.78-6.24-2.114M12 3.75a.75.75 0 01.75.75v.01a.75.75 0 01-.75.75H12a.75.75 0 01-.75-.75V4.5a.75.75 0 01.75-.75z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-vm-navy">For Guardians</h3>
+                    <p class="mt-1 text-base text-gray-600">
+                        Track your loved one in real-time and monitor driver details during their journey.
+                    </p>
+                </div>
+                <div class="p-6 bg-gray-50">
+                    <a href="{% url 'main:guardian_login' %}" class="block w-full text-center px-6 py-3 bg-vm-green hover:bg-vm-green-dark text-white font-semibold rounded-lg shadow-md transition-colors duration-200">
+                        Guardian Login
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- TWEAK: NEW "How it Works" Section -->
+    <div class="py-24 bg-white mt-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-3xl font-extrabold text-vm-navy">Simple, Safe, Secure</h2>
+                <p class="mt-4 text-lg text-gray-600">A seamless experience from start to finish.</p>
+            </div>
+
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+                <!-- Step 1 -->
+                <div class="flex flex-col items-center">
+                    <div class="flex-shrink-0">
+                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-vm-blue text-white shadow-lg">
+                            <!-- Icon: Hand Raised -->
+                            <svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 15l-4.5-4.5m0 0l4.5-4.5m-4.5 4.5h11.25m-11.25 0H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125h3.375m0-3.75S6.75 12 6.75 12m0-3.75h.008v.008H6.75V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 15l-4.5-4.5m0 0l4.5-4.5m-4.5 4.5h11.25m-11.25 0H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125h3.375m0-3.75S6.75 12 6.75 12m0-3.75h.008v.008H6.75V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" transform="translate(4, 0) rotate(15 12 12)" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="text-xl font-semibold text-gray-800">1. Press the Button</h3>
+                        <p class="mt-2 text-base text-gray-600">The passenger simply presses their paired VisionMate IoT device to request a ride.</p>
+                    </div>
+                </div>
+                <!-- Step 2 -->
+                <div class="flex flex-col items-center">
+                    <div class="flex-shrink-0">
+                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-vm-blue text-white shadow-lg">
+                            <!-- Icon: Truck/Car -->
+                            <svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.125-.504 1.125-1.125V14.25m-17.25 4.5v-1.875a3.375 3.375 0 013.375-3.375h9.75a3.375 3.375 0 013.375 3.375v1.875m-17.25 4.5h16.5M5.625 13.5v-1.875a3.375 3.375 0 013.375-3.375h9.75a3.375 3.375 0 013.375 3.375v1.875" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="text-xl font-semibold text-gray-800">2. Get a Driver</h3>
+                        <p class="mt-2 text-base text-gray-600">Our system instantly alerts nearby, available drivers who accept the ride.</p>
+                    </div>
+                </div>
+                <!-- Step 3 -->
+                <div class="flex flex-col items-center">
+                    <div class="flex-shrink-0">
+                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-vm-blue text-white shadow-lg">
+                            <!-- Icon: Shield Check -->
+                            <svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.956 11.956 0 0112 3c2.37 0 4.54.78 6.24 2.114M15.76 15.76A11.96 11.96 0 0112 18.25c-2.37 0-4.54-.78-6.24-2.114m12.48-3.514A11.953 11.953 0 0118.25 12c0 2.37-.78 4.54-2.114 6.24m-3.514 3.514A11.953 11.953 0 0112 18.25c-2.37 0-4.54-.78-6.24-2.114M12 3.75a.75.75 0 01.75.75v.01a.75.75 0 01-.75.75H12a.75.75 0 01-.75-.75V4.5a.75.75 0 01.75-.75z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="text-xl font-semibold text-gray-800">3. Ride Safely</h3>
+                        <p class="mt-2 text-base text-gray-600">The guardian can track the entire ride in real-time from their private dashboard.</p>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <!-- For Guardians Card -->
-        <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden flex flex-col">
-            <div class="p-8 flex-grow">
-                <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-6">
-                    <svg class="h-8 w-8 text-vm-green" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-3.741-5.58M13.5 14.25a3 3 0 0 0-3 0m-4.5 0a3 3 0 0 0-3 0m15.75 0a3 3 0 0 0-3 0M6.75 12a3 3 0 0 1 3-3h.75a3 3 0 0 1 3 3v.75a3 3 0 0 1-3 3h-.75a3 3 0 0 1-3-3v-.75Z" />
-                    </svg>
-                </div>
-                <h3 class="text-3xl font-semibold text-vm-navy mb-3">For Guardians</h3>
-                <p class="text-gray-600 text-lg">
-                    Track your loved one in real-time and monitor driver details during their journey.
-                </p>
-            </div>
-            <div class="p-6 bg-gray-50">
-                <a href="{% url 'main:guardian_login' %}" 
-                   class="block w-full text-center bg-vm-green text-white hover:bg-green-700 px-6 py-3 rounded-md font-medium shadow-sm text-lg transition-colors duration-200">
-                   Guardian Login
-                </a>
-            </div>
-        </div>
-
     </div>
 </div>
 {% endblock %}
