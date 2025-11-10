@@ -1,12 +1,11 @@
 from django.urls import path
 from . import views  # '.' means 'from this current folder'
 
-# This is the "phone book" for the 'main' app.
+# This 'app_name' helps Django find your URLs when you use {% url '...' %} in your templates
+app_name = 'main'
 
 urlpatterns = [
-    # When someone visits the "root" path (''), 
-    # run the 'home' function from views.py.
-    # We also give this URL a name='home' so we can find it easily.
+    # URL for the home page
     path('', views.home, name='home'),
     
     # URL for the driver login page
@@ -20,4 +19,7 @@ urlpatterns = [
     
     # URL for the guardian dashboard
     path('dashboard/guardian/', views.guardian_dashboard, name='guardian_dashboard'),
+    
+    # NEW: URL for logging out
+    path('logout/', views.user_logout, name='logout'),
 ]

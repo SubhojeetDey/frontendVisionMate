@@ -10,12 +10,12 @@
             theme: {
                 extend: {
                     colors: {
-                        'vm-navy': '#122145ff',
+                        'vm-navy': '#192a56',
                         'vm-orange': '#f39c12',
                         'vm-orange-dark': '#e67e22',
                         'vm-bg': '#f4f7f6',
                         'vm-red': '#e74c3c', 
-                        'vm-blue': '#154084ff', // Adding the blue for consistency
+                        'vm-blue': '#3b82f6', // Adding the blue for consistency
                     }
                 }
             }
@@ -34,7 +34,7 @@
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #f1f1ff;
+            background: #f1f1f1;
         }
         ::-webkit-scrollbar-thumb {
             background: #ccc;
@@ -60,8 +60,8 @@
                     
                     <!-- Logout Button -->
                     <div class="flex items-center">
-                        <!-- This will link back to the 'home' page for now -->
-                        <a href="{% url 'home' %}" 
+                        <!-- FIXED: Added 'main:' -->
+                        <a href="{% url 'main:logout' %}" 
                            class="text-gray-700 bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-md text-sm font-medium">
                            Logout
                         </a>
@@ -76,8 +76,7 @@
             <!-- Header -->
             <div class="mb-6">
                 <h1 class="text-3xl font-bold text-vm-navy">Driver Dashboard</h1>
-                <!-- We'll make this name dynamic later -->
-                <p class="mt-1 text-lg text-gray-600">Welcome, Driver Divyanshu0902!</p>
+                <p class="mt-1 text-lg text-gray-600">Welcome, {{ request.user.first_name | default:request.user.username }}!</p>
             </div>
 
             <!-- Stats Cards -->
@@ -85,10 +84,6 @@
                 <!-- Active Requests -->
                 <div class="bg-white rounded-xl shadow-lg p-6">
                     <p class="text-sm font-medium text-gray-500">Active Requests</p>
-                    <!-- 
-                      FIX IS HERE: 
-                      Changed text-vm-red to text-blue-600 (our driver color)
-                    -->
                     <p class="text-4xl font-bold text-blue-600 mt-2">3</p>
                 </div>
                 <!-- Accepted Rides -->
@@ -107,10 +102,6 @@
             <div>
                 <h2 class="text-2xl font-bold text-vm-navy mb-4">Incoming Ride Requests</h2>
 
-                <!-- 
-                  This div centers the content and gives it a max-width
-                  so the cards don't stretch to fill the screen.
-                -->
                 <div class="max-w-3xl mx-auto">
                     <!-- Ride Request List -->
                     <div class="space-y-6">
@@ -123,7 +114,6 @@
                                         <h3 class="text-2xl font-semibold text-vm-navy">Sarah Johnson</h3>
                                         <p class="text-gray-600 text-lg">+1 (555) 123-4567</p>
                                     </div>
-                                    <!-- We'll keep the time-stamp red, as it's an "alert" -->
                                     <span class="text-sm text-vm-red font-medium bg-red-100 px-3 py-1 rounded-full">8:48:55 PM</span>
                                 </div>
 
@@ -134,7 +124,6 @@
                                     </div>
                                 </div>
                                 
-                                <!-- This 'details' tag creates an expandable "Get Location" section -->
                                 <details class="mt-4 group">
                                     <summary class="cursor-pointer text-blue-600 hover:text-blue-800 font-medium">
                                         Get Location
@@ -147,10 +136,6 @@
 
                             </div>
                             <div class="p-4 bg-gray-50">
-                                <!-- 
-                                  FIX IS HERE: 
-                                  Button color changed back to blue-600 for consistency
-                                -->
                                 <a href="#" class="block w-full text-center bg-blue-600 text-white hover:bg-blue-700 px-4 py-3 rounded-md font-medium shadow-sm text-lg">
                                     Accept Ride
                                 </a>
@@ -184,10 +169,6 @@
                                 </details>
                             </div>
                             <div class="p-4 bg-gray-50">
-                                <!-- 
-                                  FIX IS HERE: 
-                                  Button color changed back to blue-600 for consistency
-                                -->
                                 <a href="#" class="block w-full text-center bg-blue-600 text-white hover:bg-blue-700 px-4 py-3 rounded-md font-medium shadow-sm text-lg">
                                     Accept Ride
                                 </a>
@@ -195,7 +176,7 @@
                         </div>
                         
                     </div>
-                </div> <!-- This closes the new 'max-w-3xl mx-auto' div -->
+                </div>
             </div>
 
         </main>
