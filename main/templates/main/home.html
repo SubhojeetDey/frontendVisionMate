@@ -1,138 +1,78 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to VisionMate</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'vm-navy': '#192a56',
-                        'vm-bg': '#f4f7f6',
-                        'vm-blue': '#3b82f6',
-                        'vm-green': '#22c55e',
-                    }
-                }
-            }
-        }
-    </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-    </style>
-</head>
-<body class="bg-vm-bg min-h-screen flex flex-col">
+{% extends 'main/base.html' %}
 
-    <!-- Header Navigation -->
-    <nav class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <!-- Brand Name -->
-                <div class="flex-shrink-0 flex items-center">
-                    <span class="text-2xl font-bold text-vm-navy">VisionMate</span>
-                </div>
-                
-                <!-- Login Buttons -->
-                <div class="hidden sm:flex sm:items-center sm:space-x-4">
-                    <!-- FIXED: Added 'main:' -->
-                    <a href="{% url 'main:driver_login' %}" 
-                       class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">
-                       Driver Login
-                    </a>
-                    <!-- FIXED: Added 'main:' -->
-                    <a href="{% url 'main:guardian_login' %}" 
-                       class="text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md text-sm font-medium shadow-sm">
-                       Guardian Login
-                    </a>
-                </div>
-            </div>
-        </div>
-    </nav>
+{% block title %}Welcome - VisionMate{% endblock %}
 
-    <!-- Main Content -->
-    <main class="flex-grow">
-        <div class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
+{% block content %}
+<div class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
             
-            <!-- Welcome Hero Section -->
-            <div class="text-center mb-16">
-                <h1 class="text-5xl font-bold text-vm-navy sm:text-6xl">
-                    Welcome to VisionMate
-                </h1>
-                <p class="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
-                    Safe ride-sharing with real-time guardian tracking. Drive with confidence. Travel with peace of mind.
-                </p>
-                
-                <!-- NEW: Display logout message if it exists -->
-                {% if messages %}
-                    <div class="mt-6 max-w-md mx-auto">
-                        {% for message in messages %}
-                            {% if message.tags == 'success' %}
-                            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-                                <span class="block sm:inline">{{ message }}</span>
-                            </div>
-                            {% endif %}
-                        {% endfor %}
+    <!-- Welcome Hero Section -->
+    <div class="text-center mb-16">
+        <h1 class="text-5xl font-bold text-vm-navy sm:text-6xl">
+            Welcome to VisionMate
+        </h1>
+        <p class="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
+            Safe ride-sharing with real-time guardian tracking. Drive with confidence. Travel with peace of mind.
+        </p>
+        
+        <!-- Display logout message if it exists -->
+        {% if messages %}
+            <div class="mt-6 max-w-md mx-auto">
+                {% for message in messages %}
+                    {% if message.tags == 'success' %}
+                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                        <span class="block sm:inline">{{ message }}</span>
                     </div>
-                {% endif %}
+                    {% endif %}
+                {% endfor %}
             </div>
+        {% endif %}
+    </div>
 
-            <!-- Login Cards Section -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+    <!-- Login Cards Section -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
 
-                <!-- For Drivers Card -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col">
-                    <div class="p-8 flex-grow">
-                        <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 mb-6">
-                            <svg class="h-8 w-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.125-.504 1.125-1.125V14.25m-17.25 4.5v-1.875a3.375 3.375 0 0 1 3.375-3.375h9.75a3.375 3.375 0 0 1 3.375 3.375v1.875m-17.25 4.5h16.5M5.625 13.5v-1.875a3.375 3.375 0 0 1 3.375-3.375h9.75a3.375 3.375 0 0 1 3.375 3.375v1.875" />
-                            </svg>
-                        </div>
-                        <h3 class="text-3xl font-semibold text-vm-navy mb-3">For Drivers</h3>
-                        <p class="text-gray-600 text-lg">
-                            Accept ride requests, view passenger details, and manage your route efficiently.
-                        </p>
-                    </div>
-                    <div class="p-6 bg-gray-50">
-                        <!-- FIXED: Added 'main:' -->
-                        <a href="{% url 'main:driver_login' %}" 
-                           class="block w-full text-center bg-blue-600 text-white hover:bg-blue-700 px-6 py-3 rounded-md font-medium shadow-sm text-lg">
-                           Driver Login
-                        </a>
-                    </div>
+        <!-- For Drivers Card -->
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden flex flex-col">
+            <div class="p-8 flex-grow">
+                <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 mb-6">
+                    <svg class="h-8 w-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.125-.504 1.125-1.125V14.25m-17.25 4.5v-1.875a3.375 3.375 0 0 1 3.375-3.375h9.75a3.375 3.375 0 0 1 3.375 3.375v1.875m-17.25 4.5h16.5M5.625 13.5v-1.875a3.375 3.375 0 0 1 3.375-3.375h9.75a3.375 3.375 0 0 1 3.375 3.375v1.875" />
+                    </svg>
                 </div>
-
-                <!-- For Guardians Card -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col">
-                    <div class="p-8 flex-grow">
-                        <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-6">
-                            <svg class="h-8 w-8 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-3.741-5.58M13.5 14.25a3 3 0 0 0-3 0m-4.5 0a3 3 0 0 0-3 0m15.75 0a3 3 0 0 0-3 0M6.75 12a3 3 0 0 1 3-3h.75a3 3 0 0 1 3 3v.75a3 3 0 0 1-3 3h-.75a3 3 0 0 1-3-3v-.75Z" />
-                            </svg>
-                        </div>
-                        <h3 class="text-3xl font-semibold text-vm-navy mb-3">For Guardians</h3>
-                        <p class="text-gray-600 text-lg">
-                            Track your loved one in real-time and monitor driver details during their journey.
-                        </p>
-                    </div>
-                    <div class="p-6 bg-gray-50">
-                        <!-- FIXED: Added 'main:' -->
-                        <a href="{% url 'main:guardian_login' %}" 
-                           class="block w-full text-center bg-green-600 text-white hover:bg-green-700 px-6 py-3 rounded-md font-medium shadow-sm text-lg">
-                           Guardian Login
-                        </a>
-                    </div>
-                </div>
-
+                <h3 class="text-3xl font-semibold text-vm-navy mb-3">For Drivers</h3>
+                <p class="text-gray-600 text-lg">
+                    Accept ride requests, view passenger details, and manage your route efficiently.
+                </p>
+            </div>
+            <div class="p-6 bg-gray-50">
+                <a href="{% url 'main:driver_login' %}" 
+                   class="block w-full text-center bg-blue-600 text-white hover:bg-blue-700 px-6 py-3 rounded-md font-medium shadow-sm text-lg transition-colors duration-200">
+                   Driver Login
+                </a>
             </div>
         </div>
-    </main>
 
-</body>
-</html>
+        <!-- For Guardians Card -->
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden flex flex-col">
+            <div class="p-8 flex-grow">
+                <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-6">
+                    <svg class="h-8 w-8 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-3.741-5.58M13.5 14.25a3 3 0 0 0-3 0m-4.5 0a3 3 0 0 0-3 0m15.75 0a3 3 0 0 0-3 0M6.75 12a3 3 0 0 1 3-3h.75a3 3 0 0 1 3 3v.75a3 3 0 0 1-3 3h-.75a3 3 0 0 1-3-3v-.75Z" />
+                    </svg>
+                </div>
+                <h3 class="text-3xl font-semibold text-vm-navy mb-3">For Guardians</h3>
+                <p class="text-gray-600 text-lg">
+                    Track your loved one in real-time and monitor driver details during their journey.
+                </p>
+            </div>
+            <div class="p-6 bg-gray-50">
+                <a href="{% url 'main:guardian_login' %}" 
+                   class="block w-full text-center bg-green-600 text-white hover:bg-green-700 px-6 py-3 rounded-md font-medium shadow-sm text-lg transition-colors duration-200">
+                   Guardian Login
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

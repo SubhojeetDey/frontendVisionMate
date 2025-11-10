@@ -1,159 +1,135 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guardian Dashboard - VisionMate</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'vm-navy': '#192a56',
-                        'vm-orange': '#f39c12',
-                        'vm-bg': '#f4f7f6',
-                        'vm-red': '#e74c3c',
-                        'vm-green': '#22c55e',
-                    }
-                }
-            }
-        }
-    </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f4f7f6;
-        }
-        /* Custom scrollbar for the dashboard */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #ccc;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #aaa;
-        }
-    </style>
-</head>
-<body class="bg-vm-bg text-gray-900">
+{% extends 'main/base.html' %}
 
-    <div class="flex flex-col min-h-screen">
+{% block title %}Guardian Dashboard - VisionMate{% endblock %}
 
-        <!-- Dashboard Navigation Bar -->
-        <nav class="bg-white shadow-sm w-full">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between items-center h-16">
-                    <!-- Brand Name -->
-                    <div class="flex-shrink-0 flex items-center">
-                        <span class="text-2xl font-bold text-vm-navy">VisionMate</span>
-                    </div>
-                    
-                    <!-- Logout Button -->
-                    <div class="flex items-center">
-                        <!-- FIXED: Added 'main:' -->
-                        <a href="{% url 'main:logout' %}" 
-                           class="text-gray-700 bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-md text-sm font-medium">
-                           Logout
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </nav>
-        
-        <!-- Main Content Area -->
-        <main class="flex-grow max-w-7xl mx-auto w-full py-8 px-4 sm:px-6 lg:px-8">
-        
-            <!-- Header -->
-            <div class="mb-6 flex justify-between items-center">
-                <div>
-                    <h1 class="text-3xl font-bold text-vm-navy">Guardian Dashboard</h1>
-                    <p class="mt-1 text-lg text-gray-600">Welcome, {{ request.user.first_name | default:request.user.username }}!</p>
-                </div>
-                <!-- This button is just a placeholder, we'll add JS for it later -->
-                <button class="bg-green-600 text-white hover:bg-green-700 px-5 py-2 rounded-md font-medium shadow-sm">
-                    Start Tracking
-                </button>
-            </div>
-        
-            <!-- Main Content Grid -->
-            <!-- We can add a map here later, for now just the cards -->
-            <div class="space-y-8">
-                
-                <!-- Person Being Tracked Card -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <h3 class="text-2xl font-semibold text-vm-navy">Alex Johnson (Daughter)</h3>
-                                <div class="flex items-center mt-1">
-                                    <span class="h-3 w-3 rounded-full bg-green-500 mr-2"></span>
-                                    <span class="text-green-700 font-medium">Traveling</span>
-                                </div>
-                            </div>
-                            <span class="text-sm text-vm-red font-medium bg-red-100 px-3 py-1 rounded-full">Updated: 8:50:39 PM</span>
-                        </div>
-                        
-                        <!-- Current Location -->
-                        <div>
-                            <h4 class="text-lg font-semibold text-gray-800 mb-2">Current Location</h4>
-                            <div class="bg-gray-100 p-4 rounded-md grid grid-cols-2 gap-4">
-                                <div>
-                                    <label class="text-sm font-medium text-gray-500">Latitude</label>
-                                    <p class="text-lg font-mono text-gray-900">40.712800</p>
-                                </div>
-                                <div>
-                                    <label class="text-sm font-medium text-gray-500">Longitude</label>
-                                    <p class="text-lg font-mono text-gray-900">-74.006000</p>
+{% block content %}
+<!-- Main Content Area -->
+<main class="flex-grow max-w-7xl mx-auto w-full py-8 px-4 sm:px-6 lg:px-8">
 
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Driver Information -->
-                        <div class="mt-6 pt-6 border-t border-gray-200">
-                            <h4 class="text-lg font-semibold text-gray-800 mb-4">Driver Information</h4>
-                            <div class="space-y-3">
-                                <div class="flex justify-between">
-                                    <span class="text-gray-600">Driver Name:</span>
-                                    <span class="font-medium text-gray-900">James Wilson</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-gray-600">Contact:</span>
-                                    <span class="font-medium text-blue-600">+1 (555) 111-2222</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-gray-600">Vehicle:</span>
-                                    <span class="font-medium text-gray-900">NY-ABC-1234</span>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="p-4 bg-gray-50 grid grid-cols-2 gap-4">
-                        <a href="#" class="block w-full text-center bg-gray-200 text-gray-800 hover:bg-gray-300 px-4 py-3 rounded-md font-medium">
-                            View Details
-                        </a>
-                        <a href="#" class="block w-full text-center bg-green-600 text-white hover:bg-green-700 px-4 py-3 rounded-md font-medium shadow-sm">
-                            Call Driver
-                        </a>
-                    </div>
-                </div>
-
-                <!-- We can add more tracked people cards here -->
-
-            </div>
-        
-        </main>
+    <!-- Header -->
+    <div class="mb-8 flex justify-between items-center">
+        <div>
+            <h1 class="text-3xl font-bold text-vm-navy">Guardian Dashboard</h1>
+        </div>
+        <button class="bg-green-600 text-white hover:bg-green-700 px-5 py-2 rounded-md font-medium shadow-sm transition-colors duration-200">
+            Start Tracking
+        </button>
     </div>
 
-</body>
-</html>
+    <!-- Main Dashboard Grid: 2/3 wide left, 1/3 narrow right on large screens -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- LEFT COLUMN (2/3 Width: Live Tracking Map) -->
+        <div class="lg:col-span-2 space-y-8">
+            
+            <!-- Live Tracking Map Card -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-shadow duration-300 hover:shadow-xl">
+                
+                <!-- Header/Status Bar: PADDING REDUCED SLIGHTLY -->
+                <div class="p-4 pb-3 border-b border-gray-100 flex justify-between items-start">
+                    <div>
+                        <h3 class="text-xl font-semibold text-vm-navy">Alex Johnson (Daughter)</h3>
+                        <div class="flex items-center mt-1">
+                            <span class="h-3 w-3 rounded-full bg-green-500 mr-2 animate-pulse"></span>
+                            <span class="text-green-700 font-medium">Traveling</span>
+                        </div>
+                    </div>
+                    <span class="text-xs text-gray-500 font-medium bg-gray-100 px-2 py-0.5 rounded-full">Last Updated: 8:50:39 PM</span>
+                </div>
+                
+                <!-- Map and Location Details -->
+                <!-- PADDING REDUCED -->
+                <div class="p-4">
+                    
+                    <!-- Map Placeholder - RESTORED HEIGHT -->
+                    <div class="h-96 bg-gray-200 rounded-lg overflow-hidden relative border border-gray-300 mb-4">
+                        <!-- Simulate a map visual -->
+                        <div class="absolute inset-0 bg-cover bg-center opacity-70" style="background-image: url('https://placehold.co/800x600/6B7280/F9FAFB?text=LIVE+MAP+FEED');"></div>
+                        <div class="absolute inset-0 flex items-center justify-center backdrop-blur-sm">
+                            <span class="text-xl font-semibold text-gray-800 bg-white p-3 rounded-md shadow-xl">Live Map Placeholder</span>
+                            <!-- Marker for current location -->
+                            <div class="absolute top-1/2 left-1/2 -mt-4 -ml-4 h-8 w-8 bg-vm-red rounded-full ring-4 ring-white shadow-xl animate-pulse"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Location Coordinates - PADDING REDUCED -->
+                    <h4 class="text-lg font-semibold text-gray-800 mb-3">Location Coordinates</h4>
+                    <div class="bg-gray-50 p-3 rounded-md grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="text-sm font-medium text-gray-500">Latitude</label>
+                            <p class="text-lg font-mono text-gray-900">40.712800</p>
+                        </div>
+                        <div>
+                            <label class="text-sm font-medium text-gray-500">Longitude</label>
+                            <p class="text-lg font-mono text-gray-900">-74.006000</p>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN (1/3 Width: Sidebar) -->
+        <!-- SPACE-Y REDUCED to pull cards closer -->
+        <div class="lg:col-span-1 space-y-6"> 
+            
+            <!-- Driver Information Card -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-shadow duration-300 hover:shadow-xl">
+                <div class="p-4">
+                    <h4 class="text-xl font-semibold text-gray-800 mb-4">Driver Information</h4>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Driver Name:</span>
+                            <span class="font-medium text-gray-900">James Wilson</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Contact:</span>
+                            <span class="font-medium text-blue-600">+1 (555) 111-2222</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Vehicle:</span>
+                            <span class="font-medium text-gray-900">NY-ABC-1234</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Reduced padding on the button bar -->
+                <div class="p-3 bg-gray-50 grid grid-cols-2 gap-3"> 
+                    <a href="#" class="block w-full text-center bg-gray-200 text-gray-800 hover:bg-gray-300 px-4 py-3 rounded-md font-medium transition-colors duration-200">
+                        View Details
+                    </a>
+                    <a href="#" class="block w-full text-center bg-green-600 text-white hover:bg-green-700 px-4 py-3 rounded-md font-medium shadow-sm transition-colors duration-200">
+                        Call Driver
+                    </a>
+                </div>
+            </div>
+
+            <!-- Tracking Status Legend Card -->
+            <!-- Reduced padding on this card -->
+            <div class="bg-white rounded-xl shadow-lg p-4">
+                <h4 class="text-xl font-semibold text-gray-800 mb-4">Tracking Status Legend</h4>
+                <ul class="space-y-3">
+                    <li class="flex items-center">
+                        <span class="h-3 w-3 rounded-full bg-green-500 mr-3"></span>
+                        <span class="text-gray-700">Traveling - Active Ride</span>
+                    </li>
+                    <li class="flex items-center">
+                        <span class="h-3 w-3 rounded-full bg-blue-500 mr-3"></span>
+                        <span class="text-gray-700">Arrived - Destination reached</span>
+                    </li>
+                    <li class="flex items-center">
+                        <span class="h-3 w-3 rounded-full bg-yellow-500 mr-3"></span>
+                        <span class="text-gray-700">Waiting - Driver en route</span>
+                    </li>
+                    <li class="flex items-center">
+                        <span class="h-3 w-3 rounded-full bg-red-500 mr-3"></span>
+                        <span class="text-gray-700">Offline / Error</span>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+{% endblock %}

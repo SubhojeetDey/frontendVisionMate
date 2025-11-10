@@ -1,115 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Driver Login - VisionMate</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'vm-navy': '#192a56',
-                        'vm-orange': '#f39c12',
-                        'vm-orange-dark': '#e67e22',
-                        'vm-bg': '#f4f7f6',
-                        'vm-blue': '#3b82f6',
-                    }
-                }
-            }
-        }
-    </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-    </style>
-</head>
-<body class="bg-vm-bg min-h-screen flex flex-col">
+{% extends 'main/base.html' %}
 
-    <!-- Header Navigation -->
-    <nav class="bg-white shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <!-- Brand Name -->
-                <div class="flex-shrink-0 flex items-center">
-                    <!-- FIXED: Added 'main:' -->
-                    <a href="{% url 'main:home' %}" class="text-2xl font-bold text-vm-navy">
-                        VisionMate
-                    </a>
-                </div>
-                
-                <!-- Back Button -->
-                <div class="flex items-center">
-                    <!-- FIXED: Added 'main:' -->
-                    <a href="{% url 'main:home' %}" 
-                       class="text-gray-700 bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-md text-sm font-medium">
-                       Back to Home
-                    </a>
-                </div>
-            </div>
-        </div>
-    </nav>
+{% block title %}Driver Login - VisionMate{% endblock %}
 
-    <!-- Login Form Section -->
-    <div class="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-md w-full">
-            <div class="bg-white p-8 md:p-10 rounded-xl shadow-lg">
-                <div class="space-y-6">
-                    <div>
-                        <div class="text-center">
-                            <h2 class="text-3xl font-bold text-vm-navy">
-                                Driver Login
-                            </h2>
-                            <p class="mt-2 text-gray-600">
-                                Enter your credentials to access ride requests
-                            </p>
-                        </div>
-    
-                        {% if messages %}
-                            <div class="mt-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                                {% for message in messages %}
-                                    <span class="block sm:inline">{{ message }}</span>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-    
-                        <!-- Login Form -->
-                        <!-- FIXED: Added 'main:' to action URL -->
-                        <form class="mt-8 space-y-6" action="{% url 'main:driver_login' %}" method="POST">
-                            {% csrf_token %}
-                            <input type="hidden" name="remember" value="true">
-                            <div class="rounded-md shadow-sm -space-y-px">
-                                <div>
-                                    <label for="driver-user-id" class="block text-sm font-medium text-gray-700">Driver User ID</label>
-                                    <input id="driver-user-id" name="driver_user_id" type="text" autocomplete="username" required
-                                           class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                                           placeholder="Enter your user ID">
-                                </div>
-                                <div class="pt-4">
-                                    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                                    <input id="password" name="password" type="password" autocomplete="current-password" required
-                                           class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                                           placeholder="Enter your password">
-                                </div>
-                            </div>
-    
-                            <div>
-                                <button type="submit"
-                                        class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                                    Login as Driver
-                                </button>
-                            </div>
-                        </form>
+{% block content %}
+<!-- Login Form Section -->
+<div class="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full">
+        <div class="bg-white p-8 md:p-10 rounded-xl shadow-lg">
+            <div class="space-y-6">
+                <div>
+                    <div class="text-center">
+                        <h2 class="text-3xl font-bold text-vm-navy">
+                            Driver Login
+                        </h2>
+                        <p class="mt-2 text-gray-600">
+                            Enter your credentials to access ride requests
+                        </p>
                     </div>
+
+                    {% if messages %}
+                        <div class="mt-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                            {% for message in messages %}
+                                <span class="block sm:inline">{{ message }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <!-- Login Form -->
+                    <form class="mt-8 space-y-6" action="{% url 'main:driver_login' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="remember" value="true">
+                        <div class="rounded-md shadow-sm -space-y-px">
+                            <div>
+                                <label for="driver-user-id" class="block text-sm font-medium text-gray-700">Driver User ID</label>
+                                <input id="driver-user-id" name="driver_user_id" type="text" autocomplete="username" required
+                                       class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                                       placeholder="Enter your user ID">
+                            </div>
+                            <div class="pt-4">
+                                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                                <input id="password" name="password" type="password" autocomplete="current-password" required
+                                       class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                                       placeholder="Enter your password">
+                            </div>
+                        </div>
+
+                        <div>
+                            <button type="submit"
+                                    class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
+                                Login as Driver
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-
-</body>
-</html>
+</div>
+{% endblock %}

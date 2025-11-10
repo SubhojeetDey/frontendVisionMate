@@ -1,187 +1,117 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Driver Dashboard - VisionMate</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'vm-navy': '#192a56',
-                        'vm-orange': '#f39c12',
-                        'vm-orange-dark': '#e67e22',
-                        'vm-bg': '#f4f7f6',
-                        'vm-red': '#e74c3c', 
-                        'vm-blue': '#3b82f6', // Adding the blue for consistency
-                    }
-                }
-            }
-        }
-    </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f4f7f6;
-        }
-        /* Custom scrollbar for the dashboard */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #ccc;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #aaa;
-        }
-    </style>
-</head>
-<body class="bg-vm-bg text-gray-900">
+{% extends 'main/base.html' %}
 
-    <div class="flex flex-col min-h-screen">
+{% block title %}Driver Dashboard - VisionMate{% endblock %}
 
-        <!-- Dashboard Navigation Bar -->
-        <nav class="bg-white shadow-sm w-full">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between items-center h-16">
-                    <!-- Brand Name -->
-                    <div class="flex-shrink-0 flex items-center">
-                        <span class="text-2xl font-bold text-vm-navy">VisionMate</span>
-                    </div>
-                    
-                    <!-- Logout Button -->
-                    <div class="flex items-center">
-                        <!-- FIXED: Added 'main:' -->
-                        <a href="{% url 'main:logout' %}" 
-                           class="text-gray-700 bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-md text-sm font-medium">
-                           Logout
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </nav>
+{% block content %}
+<!-- Main Content Area -->
+<main class="flex-grow max-w-7xl mx-auto w-full py-8 px-4 sm:px-6 lg:px-8">
 
-        <!-- Main Content Area -->
-        <main class="flex-grow max-w-7xl mx-auto w-full py-8 px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
+    <div class="mb-6">
+        <h1 class="text-3xl font-bold text-vm-navy">Driver Dashboard</h1>
+        <!-- The navbar already welcomes the user, so this is optional -->
+        <!-- <p class="mt-1 text-lg text-gray-600">Welcome, {{ request.user.first_name | default:request.user.username }}!</p> -->
+    </div>
 
-            <!-- Header -->
-            <div class="mb-6">
-                <h1 class="text-3xl font-bold text-vm-navy">Driver Dashboard</h1>
-                <p class="mt-1 text-lg text-gray-600">Welcome, {{ request.user.first_name | default:request.user.username }}!</p>
-            </div>
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <!-- Active Requests -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <p class="text-sm font-medium text-gray-500">Active Requests</p>
+            <p class="text-4xl font-bold text-blue-600 mt-2">3</p>
+        </div>
+        <!-- Accepted Rides -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <p class="text-sm font-medium text-gray-500">Accepted Rides</p>
+            <p class="text-4xl font-bold text-vm-navy mt-2">0</p>
+        </div>
+        <!-- Rating -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <p class="text-sm font-medium text-gray-500">Rating</p>
+            <p class="text-4xl font-bold text-vm-navy mt-2">4.8</p>
+        </div>
+    </div>
 
-            <!-- Stats Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <!-- Active Requests -->
-                <div class="bg-white rounded-xl shadow-lg p-6">
-                    <p class="text-sm font-medium text-gray-500">Active Requests</p>
-                    <p class="text-4xl font-bold text-blue-600 mt-2">3</p>
-                </div>
-                <!-- Accepted Rides -->
-                <div class="bg-white rounded-xl shadow-lg p-6">
-                    <p class="text-sm font-medium text-gray-500">Accepted Rides</p>
-                    <p class="text-4xl font-bold text-vm-navy mt-2">0</p>
-                </div>
-                <!-- Rating -->
-                <div class="bg-white rounded-xl shadow-lg p-6">
-                    <p class="text-sm font-medium text-gray-500">Rating</p>
-                    <p class="text-4xl font-bold text-vm-navy mt-2">4.8</p>
-                </div>
-            </div>
+    <!-- Incoming Ride Requests Section -->
+    <div>
+        <h2 class="text-2xl font-bold text-vm-navy mb-4">Incoming Ride Requests</h2>
 
-            <!-- Incoming Ride Requests Section -->
-            <div>
-                <h2 class="text-2xl font-bold text-vm-navy mb-4">Incoming Ride Requests</h2>
+        <div class="max-w-3xl mx-auto">
+            <!-- Ride Request List -->
+            <div class="space-y-6">
 
-                <div class="max-w-3xl mx-auto">
-                    <!-- Ride Request List -->
-                    <div class="space-y-6">
-
-                        <!-- Ride Request Card 1 (Matches your screenshot) -->
-                        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-                            <div class="p-6">
-                                <div class="flex justify-between items-start">
-                                    <div>
-                                        <h3 class="text-2xl font-semibold text-vm-navy">Sarah Johnson</h3>
-                                        <p class="text-gray-600 text-lg">+1 (555) 123-4567</p>
-                                    </div>
-                                    <span class="text-sm text-vm-red font-medium bg-red-100 px-3 py-1 rounded-full">8:48:55 PM</span>
-                                </div>
-
-                                <div class="mt-4">
-                                    <label class="text-sm font-medium text-gray-500">Pickup Location</label>
-                                    <div class="bg-gray-100 p-4 rounded-md text-gray-800 font-medium text-lg">
-                                        Downtown Market, Main St
-                                    </div>
-                                </div>
-                                
-                                <details class="mt-4 group">
-                                    <summary class="cursor-pointer text-blue-600 hover:text-blue-800 font-medium">
-                                        Get Location
-                                    </summary>
-                                    <div class="mt-2 bg-gray-100 p-4 rounded-md">
-                                        <p class="font-mono text-sm text-gray-700"><strong>Latitude:</strong> 40.7128</p>
-                                        <p class="font-mono text-sm text-gray-700"><strong>Longitude:</strong> -74.0060</p>
-                                    </div>
-                                </details>
-
+                <!-- Ride Request Card 1 (Matches your screenshot) -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-shadow duration-300 hover:shadow-xl">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-2xl font-semibold text-vm-navy">Sarah Johnson</h3>
+                                <p class="text-gray-600 text-lg">+1 (555) 123-4567</p>
                             </div>
-                            <div class="p-4 bg-gray-50">
-                                <a href="#" class="block w-full text-center bg-blue-600 text-white hover:bg-blue-700 px-4 py-3 rounded-md font-medium shadow-sm text-lg">
-                                    Accept Ride
-                                </a>
-                            </div>
+                            <span class="text-sm text-vm-red font-medium bg-red-100 px-3 py-1 rounded-full">8:48:55 PM</span>
                         </div>
 
-                        <!-- Ride Request Card 2 (Placeholder) -->
-                        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-                            <div class="p-6">
-                                <div class="flex justify-between items-start">
-                                    <div>
-                                        <h3 class="text-2xl font-semibold text-vm-navy">Michael Brown</h3>
-                                        <p class="text-gray-600 text-lg">+1 (555) 987-6543</p>
-                                    </div>
-                                    <span class="text-sm text-vm-red font-medium bg-red-100 px-3 py-1 rounded-full">8:47:12 PM</span>
-                                </div>
-                                <div class="mt-4">
-                                    <label class="text-sm font-medium text-gray-500">Pickup Location</label>
-                                    <div class="bg-gray-100 p-4 rounded-md text-gray-800 font-medium text-lg">
-                                        City Library, 4th Ave
-                                    </div>
-                                </div>
-                                <details class="mt-4 group">
-                                    <summary class="cursor-pointer text-blue-600 hover:text-blue-800 font-medium">
-                                        Get Location
-                                    </summary>
-                                    <div class="mt-2 bg-gray-100 p-4 rounded-md">
-                                        <p class="font-mono text-sm text-gray-700"><strong>Latitude:</strong> 40.7357</p>
-                                        <p class="font-mono text-sm text-gray-700"><strong>Longitude:</strong> -73.9911</p>
-                                    </div>
-                                </details>
-                            </div>
-                            <div class="p-4 bg-gray-50">
-                                <a href="#" class="block w-full text-center bg-blue-600 text-white hover:bg-blue-700 px-4 py-3 rounded-md font-medium shadow-sm text-lg">
-                                    Accept Ride
-                                </a>
+                        <div class="mt-4">
+                            <label class="text-sm font-medium text-gray-500">Pickup Location</label>
+                            <div class="bg-gray-100 p-4 rounded-md text-gray-800 font-medium text-lg">
+                                Downtown Market, Main St
                             </div>
                         </div>
                         
+                        <details class="mt-4 group">
+                            <summary class="cursor-pointer text-blue-600 hover:text-blue-800 font-medium transition-colors duration-200">
+                                Get Location
+                            </summary>
+                            <div class="mt-2 bg-gray-100 p-4 rounded-md">
+                                <p class="font-mono text-sm text-gray-700"><strong>Latitude:</strong> 40.7128</p>
+                                <p class="font-mono text-sm text-gray-700"><strong>Longitude:</strong> -74.0060</p>
+                            </div>
+                        </details>
+
+                    </div>
+                    <div class="p-4 bg-gray-50">
+                        <a href="#" class="block w-full text-center bg-blue-600 text-white hover:bg-blue-700 px-4 py-3 rounded-md font-medium shadow-sm text-lg transition-colors duration-200">
+                            Accept Ride
+                        </a>
                     </div>
                 </div>
+
+                <!-- Ride Request Card 2 (Placeholder) -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-shadow duration-300 hover:shadow-xl">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-2xl font-semibold text-vm-navy">Michael Brown</h3>
+                                <p class="text-gray-600 text-lg">+1 (555) 987-6543</p>
+                            </div>
+                            <span class="text-sm text-vm-red font-medium bg-red-100 px-3 py-1 rounded-full">8:47:12 PM</span>
+                        </div>
+                        <div class="mt-4">
+                            <label class="text-sm font-medium text-gray-500">Pickup Location</label>
+                            <div class="bg-gray-100 p-4 rounded-md text-gray-800 font-medium text-lg">
+                                City Library, 4th Ave
+                            </div>
+                        </div>
+                        <details class="mt-4 group">
+                            <summary class="cursor-pointer text-blue-600 hover:text-blue-800 font-medium transition-colors duration-200">
+                                Get Location
+                            </summary>
+                            <div class="mt-2 bg-gray-100 p-4 rounded-md">
+                                <p class="font-mono text-sm text-gray-700"><strong>Latitude:</strong> 40.7357</p>
+                                <p class="font-mono text-sm text-gray-700"><strong>Longitude:</strong> -73.9911</p>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="p-4 bg-gray-50">
+                        <a href="#" class="block w-full text-center bg-blue-600 text-white hover:bg-blue-700 px-4 py-3 rounded-md font-medium shadow-sm text-lg transition-colors duration-200">
+                            Accept Ride
+                        </a>
+                    </div>
+                </div>
+                
             </div>
-
-        </main>
-
+        </div>
     </div>
 
-</body>
-</html>
+</main>
+{% endblock %}
