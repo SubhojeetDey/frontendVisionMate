@@ -107,9 +107,9 @@
             <div class="flex justify-between items-start mb-3">
               <div>
                 <!-- TWEAK: Reduced font size from 2xl to xl -->
-                <h3 class="text-xl font-semibold text-vm-navy">Priya Sharma</h3>
+                <h3 class="text-xl font-semibold text-vm-navy">{{name}}</h3>
                 <!-- TWEAK: Reduced font size from lg to base -->
-                <p class="text-base text-gray-600">+91 98765 43210</p>
+                <p class="text-base text-gray-600">+91 {{phone_no}}</p>
               </div>
               <span class="text-sm font-medium text-orange-600 bg-orange-100 py-1 px-3 rounded-full">8:48:55 PM</span>
             </div>
@@ -117,7 +117,7 @@
             <div class="bg-gray-50 p-4 rounded-lg mb-4">
               <p class="text-sm font-medium text-gray-500 uppercase tracking-wide">Pickup Location</p>
               <!-- TWEAK: Reduced font size from lg to base -->
-              <p class="text-base font-semibold text-gray-800">Park Street, Kolkata</p>
+              <p class="text-base font-semibold text-gray-800">{{adress}}</p>
             </div>
             
             <!-- TWEAK: Changed <details> tag to an <a> link tag -->
@@ -136,38 +136,6 @@
         </div>
         
         <!-- Placeholder Ride Request Card 2 (India-Specific) -->
-        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-          <div class="p-6">
-            <div class="flex justify-between items-start mb-3">
-              <div>
-                <!-- TWEAK: Reduced font size from 2xl to xl -->
-                <h3 class="text-xl font-semibold text-vm-navy">Rohan Gupta</h3>
-                <!-- TWEAK: Reduced font size from lg to base -->
-                <p class="text-base text-gray-600">+91 91234 56789</p>
-              </div>
-              <span class="text-sm font-medium text-orange-600 bg-orange-100 py-1 px-3 rounded-full">8:47:12 PM</span>
-            </div>
-            
-            <div class="bg-gray-50 p-4 rounded-lg mb-4">
-              <p class="text-sm font-medium text-gray-500 uppercase tracking-wide">Pickup Location</p>
-              <!-- TWEAK: Reduced font size from lg to base -->
-              <p class="text-base font-semibold text-gray-800">Salt Lake, Sector V</p>
-            </div>
-            
-            <!-- TWEAK: Changed <details> tag to an <a> link tag -->
-            <a href="https://www.circuitdigest.cloud/geolinker-web-app" 
-               target="_blank" 
-               rel="noopener noreferrer"
-               class="inline-block text-base font-medium text-vm-blue cursor-pointer hover:underline mb-4">
-              Get Location
-            </a>
-
-            <!-- TWEAK: Reduced font size from lg to base -->
-            <button class="w-full bg-vm-blue hover:bg-blue-700 text-white font-bold text-base py-3 px-6 rounded-lg transition duration-300 ease-in-out shadow-md">
-              Accept Ride
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   </div>

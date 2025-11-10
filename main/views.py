@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import DriverProfile, Passenger
+import requests
 
 # --- Helper function to check group membership ---
 def is_in_group(user, group_name):
@@ -25,6 +26,7 @@ def driver_login(request):
     """
     Handles the login form for Drivers.
     """
+    context = {}
     if request.method == 'POST':
         # Get data from the form
         username = request.POST.get('driver_user_id')
@@ -44,7 +46,7 @@ def driver_login(request):
             messages.error(request, 'Invalid username or password.')
             
     # CORRECTED PATH: Removed 'main/templates/'
-    return render(request, 'main/driver_login.html')
+    return render(request, 'main/driver_login.html',context)
 
 
 def guardian_login(request):
@@ -90,6 +92,7 @@ def driver_dashboard(request):
     Ensures the user is a Driver.
     """
     # Redirect if a Guardian somehow gets here
+    
     if not is_in_group(request.user, 'Drivers'):
         return redirect('main:home')
 
@@ -100,10 +103,22 @@ def driver_dashboard(request):
     except DriverProfile.DoesNotExist:
         # This is a fallback in case the profile wasn't created in the admin
         driver_profile = None
+    req = requests.get('http://192.168.1.10:8000/rides/show_all',timeout=5)
+    data = req.json()
 
-    context = {
-        'driver_profile': driver_profile
-    }
+    for i in data:
+        name = i.get('name')
+        location = i.get('location')
+        phone_no = i.get('phone_no')
+        adress = i.get('adress')
+        print(i)
+        context = {
+            'name': name,
+            'location': location,
+            'phone_no': phone_no,
+            'adress': adress,
+            'driver_profile': driver_profile
+        }
     # CORRECTED PATH: Removed 'main/templates/'
     return render(request, 'main/driver_dashboard.html', context)
 
@@ -128,3 +143,17 @@ def guardian_dashboard(request):
     }
     # CORRECTED PATH: Removed 'main/templates/'
     return render(request, 'main/guardian_dashboard.html', context)
+def get_user_data(request):
+    req = requests.get('http://192.168.1.10:8000/rides/show_all',timeout=5)
+    data = req.json()
+    name = data.get('name')
+    location = data.get('location')
+    phone_no = data.get('phone_no')
+    adress = data.get('adress')
+    context = {
+        'name': name,
+        'location': location,
+        'phone_no': phone_no,
+        'adress': adress
+    }
+    return render(request, 'main/driver_dashboard.html', context)
