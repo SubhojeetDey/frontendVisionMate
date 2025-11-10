@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guardian Dashboard - VisionMate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'vm-navy': '#192a56',
+                        'vm-orange': '#f39c12',
+                        'vm-orange-dark': '#e67e22',
+                        'vm-bg': '#f4f7f6',
+                        'vm-red': '#e74c3c',
+                        'vm-green': '#2ecc71',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f7f6;
+        }
+        /* Custom scrollbar for the dashboard */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #aaa;
+        }
+    </style>
+</head>
+<body class="bg-vm-bg text-gray-900">
+
+    <div class="flex flex-col min-h-screen">
+
+        <!-- Dashboard Navigation Bar -->
+        <nav class="bg-white shadow-sm w-full">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-16">
+                    <!-- Brand Name -->
+                    <div class="flex-shrink-0 flex items-center">
+                        <span class="text-2xl font-bold text-vm-navy">VisionMate</span>
+                    </div>
+                    
+                    <!-- Logout Button -->
+                    <div class="flex items-center">
+                        <!-- This will link back to the 'home' page for now -->
+                        <a href="{% url 'home' %}" 
+                           class="text-gray-700 bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-md text-sm font-medium">
+                           Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav
+
+        <!-- Main Content Area -->
+        <main class="flex-grow max-w-7xl mx-auto w-full py-8 px-4 sm:px-6 lg:px-8">
+
+            <!-- Header -->
+            <div class="mb-6 flex justify-between items-center">
+                <div>
+                    <h1 class="text-3xl font-bold text-vm-navy">Guardian Dashboard</h1>
+                    <!-- We'll make this name dynamic later -->
+                    <p class="mt-1 text-lg text-gray-600">Welcome, Guardian jkkhg!</p>
+                </div>
+                <!-- This button is just a placeholder, we'll add JS for it later -->
+                <button class="bg-green-600 text-white hover:bg-green-700 px-5 py-2 rounded-md font-medium shadow-sm">
+                    Start Tracking
+                </button>
+            </div>
+
+            <!-- Monitored Person's Cards -->
+            <div class="space-y-8">
+
+                <!-- Card 1: Alex Johnson (Daughter) - Matches your screenshot -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="p-6">
+                        <!-- Header -->
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h2 class="text-2xl font-semibold text-vm-navy">Alex Johnson (Daughter)</h2>
+                                <div class="flex items-center mt-1">
+                                    <span class="flex h-3 w-3 relative">
+                                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-vm-green opacity-75"></span>
+                                        <span class="relative inline-flex rounded-full h-3 w-3 bg-vm-green"></span>
+                                    </span>
+                                    <span class="ml-2 text-vm-green font-medium">Traveling</span>
+                                </div>
+                            </div>
+                            <span class="text-sm text-vm-orange-dark font-medium bg-orange-100 px-3 py-1 rounded-full">Updated: 8:50:39 PM</span>
+                        </div>
+
+                        <!-- Current Location -->
+                        <div class="bg-gray-50 p-4 rounded-lg mb-6">
+                            <h3 class="text-sm font-medium text-gray-500 mb-2">CURRENT LOCATION</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="text-xs text-gray-500">Latitude</label>
+                                    <p class="text-lg font-mono font-medium text-vm-navy">40.712800</p>
+                                </div>
+                                <div>
+                                    <label class="text-xs text-gray-500">Longitude</label>
+                                    <p class="text-lg font-mono font-medium text-vm-navy">-74.006000</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Driver Information -->
+                        <div>
+                            <h3 class="text-sm font-medium text-gray-500 mb-2">DRIVER INFORMATION</h3>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600">Driver Name:</span>
+                                    <span class="font-medium text-vm-navy">James Wilson</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600">Contact:</span>
+                                    <span class="font-medium text-blue-600">+1 (555) 111-2222</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600">Vehicle:</span>
+                                    <span class="font-medium font-mono text-vm-navy">NY-ABC-1234</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- Card Footer with Buttons -->
+                    <div class="p-4 bg-gray-50 border-t border-gray-200 grid grid-cols-2 gap-4">
+                        <a href="#" class="block w-full text-center bg-gray-200 text-gray-800 hover:bg-gray-300 px-4 py-3 rounded-md font-medium">
+                            View Details
+                        </a>
+                        <a href="#" class="block w-full text-center bg-vm-orange text-white hover:bg-vm-orange-dark px-4 py-3 rounded-md font-medium shadow-sm">
+                            Call Driver
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 2: Emma Davis (Son) - Placeholder based on your other screenshot -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="p-6">
+                        <!-- Header -->
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h2 class="text-2xl font-semibold text-vm-navy">Emma Davis (Son)</h2>
+                                <div class="flex items-center mt-1">
+                                    <span class="flex h-3 w-3 relative">
+                                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-vm-green opacity-75"></span>
+                                        <span class="relative inline-flex rounded-full h-3 w-3 bg-vm-green"></span>
+                                    </span>
+                                    <span class="ml-2 text-vm-green font-medium">Traveling</span>
+                                </div>
+                            </div>
+                            <span class="text-sm text-vm-orange-dark font-medium bg-orange-100 px-3 py-1 rounded-full">Updated: 8:50:39 PM</span>
+                        </div>
+
+                        <!-- Current Location -->
+                        <div class="bg-gray-50 p-4 rounded-lg mb-6">
+                            <h3 class="text-sm font-medium text-gray-500 mb-2">CURRENT LOCATION</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="text-xs text-gray-500">Latitude</label>
+                                    <p class="text-lg font-mono font-medium text-vm-navy">40.782900</p>
+                                </div>
+                                <div>
+                                    <label class="text-xs text-gray-500">Longitude</label>
+                                    <p class="text-lg font-mono font-medium text-vm-navy">-73.965400</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Driver Information -->
+                        <div>
+                            <h3 class="text-sm font-medium text-gray-500 mb-2">DRIVER INFORMATION</h3>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600">Driver Name:</span>
+                                    <span class="font-medium text-vm-navy">Robert Martinez</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600">Contact:</span>
+                                    <span class="font-medium text-blue-600">+1 (555) 333-4444</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600">Vehicle:</span>
+                                    <span class="font-medium font-mono text-vm-navy">NY-XYZ-5678</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- Card Footer with Buttons -->
+                    <div class="p-4 bg-gray-50 border-t border-gray-200 grid grid-cols-2 gap-4">
+                        <a href="#" class="block w-full text-center bg-gray-200 text-gray-800 hover:bg-gray-300 px-4 py-3 rounded-md font-medium">
+                            View Details
+                        </a>
+                        <a href="#" class="block w-full text-center bg-vm-orange text-white hover:bg-vm-orange-dark px-4 py-3 rounded-md font-medium shadow-sm">
+                            Call Driver
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>

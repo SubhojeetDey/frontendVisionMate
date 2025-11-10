@@ -1,0 +1,14 @@
+###.Superuser:--
+Username: admin
+email: admin@gmail.com
+password: superuser@123
+
+
+###. testDriver:--
+usename: testDriver
+password: driver@0902
+
+
+###. testGuardian:--
+username: testGuardian
+password: guardian@0902
