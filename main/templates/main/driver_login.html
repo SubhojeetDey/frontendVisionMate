@@ -3,59 +3,103 @@
 {% block title %}Driver Login{% endblock %}
 
 {% block content %}
-<div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full space-y-8">
-        <div>
-            <h2 class="mt-6 text-center text-4xl font-extrabold text-vm-navy">
-                Driver Login
-            </h2>
-            <p class="mt-2 text-center text-lg text-gray-600">
-                Access your ride dashboard
-            </p>
-        </div>
+<div class="flex-grow flex items-center justify-center py-6 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md w-full">
+    
+    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+        <!-- TWEAK: Reduced padding from p-8 to p-6 -->
+        <div class="p-6">
 
-        <!-- Error Message Display -->
-        {% if messages %}
-        <div class="bg-red-100 border border-vm-red text-vm-red px-4 py-3 rounded-lg relative" role="alert">
-            <strong class="font-bold">Login Failed:</strong>
-            <ul class="mt-1 list-disc list-inside">
-                {% for message in messages %}
-                <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-        {% endif %}
-
-        <!-- Login Form -->
-        <!-- This form 'action' posts back to this same view's URL -->
-        <form class="mt-8 space-y-6" action="{% url 'main:driver_login' %}" method="POST">
-            
-            <!-- CSRF Token (Security) -->
-            {% csrf_token %}
-            
-            <input type="hidden" name="remember" value="true">
-            <div class="rounded-md shadow-sm -space-y-px">
-                <div>
-                    <label for="driver-user-id" class="sr-only">Driver User ID</label>
-                    <input id="driver-user-id" name="driver_user_id" type="text" autocomplete="username" required 
-                           class="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-vm-blue focus:border-vm-blue focus:z-10 sm:text-lg" 
-                           placeholder="Driver User ID">
+            <!-- Header with larger icon and text -->
+            <div class="text-center">
+                <!-- TWEAK: Reduced icon size -->
+                <div class="inline-flex items-center justify-center h-10 w-10 rounded-full bg-blue-100 mb-4"> <!-- TWEAK: from h-12 w-12 -->
+                    <svg class="h-7 w-7 text-vm-blue" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"> <!-- TWEAK: from h-8 w-8 -->
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.125-.504 1.125-1.125V14.25m-17.25 4.5v-1.875a3.375 3.375 0 0 1 3.375-3.375h9.75a3.375 3.375 0 0 1 3.375 3.375v1.875m-17.25 4.5h16.5M5.625 13.5v-1.875a3.375 3.375 0 0 1 3.375-3.375h9.75a3.375 3.375 0 0 1 3.375 3.375v1.875" />
+                    </svg>
                 </div>
+                <!-- TWEAK: Reduced font size -->
+                <h2 class="text-2xl font-extrabold text-gray-800"> <!-- TWEAK: from 3xl -->
+                    Driver Login
+                </h2>
+                <p class="mt-2 text-base text-gray-600">
+                    Welcome, let's get you on the road.
+                </p>
+            </div>
+
+            <!-- Error Message Display -->
+            {% if messages %}
+            <!-- TWEAK: Reduced top margin -->
+            <div class="mt-4 bg-red-100 border border-vm-red text-vm-red px-4 py-3 rounded-lg relative" role="alert"> <!-- TWEAK: from mt-6 -->
+                <strong class="font-bold">Login Failed:</strong>
+                <ul class="mt-1 list-disc list-inside text-sm">
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            <!-- Login Form with larger margins -->
+            <!-- TWEAK: Reduced top margin and spacing -->
+            <form class="mt-5 space-y-4" action="{% url 'main:driver_login' %}" method="POST"> <!-- TWEAK: from mt-6, space-y-5 -->
+                
+                {% csrf_token %}
+                <input type="hidden" name="remember" value="true">
+                
+                <div class="space-y-4">
+                    <div>
+                        <label for="driver-user-id" class="text-sm font-medium text-gray-700">Driver User ID</label>
+                        <input id="driver-user-id" name="driver_user_id" type="text" autocomplete="username" required 
+                               class="mt-1 appearance-none block w-full px-3.5 py-2.5 border border-gray-300 rounded-lg shadow-sm placeholder-gray-500 focus:outline-none focus:ring-vm-blue focus:border-vm-blue sm:text-sm" 
+                               placeholder="Enter your User ID">
+                    </div>
+                    <div>
+                        <label for="driver-password" class="text-sm font-medium text-gray-700">Password</label>
+                        <input id="driver-password" name="password" type="password" autocomplete="current-password" required 
+                               class="mt-1 appearance-none block w-full px-3.5 py-2.5 border border-gray-300 rounded-lg shadow-sm placeholder-gray-500 focus:outline-none focus:ring-vm-blue focus:border-vm-blue sm:text-sm" 
+                               placeholder="Enter your password">
+                    </div>
+                </div>
+
                 <div>
-                    <label for="driver-password" class="sr-only">Password</label>
-                    <input id="driver-password" name="password" type="password" autocomplete="current-password" required 
-                           class="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-vm-blue focus:border-vm-blue focus:z-10 sm:text-lg" 
-                           placeholder="Password">
+                    <!-- TWEAK: Reduced padding -->
+                    <button type="submit" 
+                            class="group relative w-full flex justify-center py-2.5 px-4 border border-transparent text-base font-medium rounded-lg text-white bg-vm-blue hover:bg-vm-blue-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-vm-blue shadow-md transition-colors duration-300"> <!-- TWEAK: from py-3 -->
+                        Login as Driver
+                    </button>
+                </div>
+            </form>
+
+            <!-- Divider with larger margin -->
+            <div class="relative my-5"> <!-- TWEAK: from my-6 -->
+                <div class="absolute inset-0 flex items-center">
+                    <div class="w-full border-t border-gray-300"></div>
+                </div>
+                <div class="relative flex justify-center text-sm">
+                    <span class="px-2 bg-white text-gray-500">
+                        Or continue with
+                    </span>
                 </div>
             </div>
 
+            <!-- Social Login Placeholders with larger button -->
             <div>
-                <button type="submit" 
-                        class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-lg font-medium rounded-md text-white bg-vm-blue hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-vm-blue shadow-md transition-colors duration-300">
-                    Login as Driver
-                </button>
+                 <!-- TWEAK: Reduced padding -->
+                <a href="#" class="w-full inline-flex justify-center py-2.5 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"> <!-- TWEAK: from py-3 -->
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 48 48">
+                        <path fill="#4285F4" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l8.06 6.21C12.43 13.72 17.74 9.5 24 9.5z"></path>
+                        <path fill="#34A853" d="M46.98 24.55c0-1.57-.15-3.09-.42-4.55H24v8.51h12.8c-.57 2.73-2.22 4.96-4.78 6.52l7.74 6C42.84 36.3 46.98 31 46.98 24.55z"></path>
+                        <path fill="#FBBC05" d="M10.6 28.71c-.7-2.11-.7-4.39 0-6.5l-8.06-6.21C.96 11.97 0 17.88 0 24c0 6.12.96 12.03 2.56 17.29l8.04-6.2z"></path>
+                        <path fill="#EA4335" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.74-6c-2.56 1.73-5.84 2.63-9.15 2.63-6.26 0-11.57-4.22-13.47-9.91l-8.06 6.21C6.51 42.62 14.62 48 24 48z"></path>
+                        <path fill="none" d="M0 0h48v48H0z"></path>
+                    </svg>
+                    <span class="ml-3">Continue with Google</span>
+                </a>
             </div>
-        </form>
+
+        </div>
     </div>
+  </div>
 </div>
 {% endblock %}

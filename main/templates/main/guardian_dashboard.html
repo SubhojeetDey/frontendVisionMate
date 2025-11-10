@@ -40,11 +40,11 @@
           {% endif %}
         </div>
         
-        <!-- Live Map Placeholder -->
+        <!-- Live Map Placeholder (DARKER & SHORTER) -->
         <div class="p-6 bg-gray-50 flex-grow">
-          <div class="relative w-full h-full min-h-[40rem] flex-grow rounded-lg bg-gray-300 flex items-center justify-center">
-            <div class="absolute inset-0 bg-cover bg-center rounded-lg" style="background-image: url(httpsSame-day delivery
-A same-day delivery service ensures that customers receive their parcels on the day they make the purchase, typically within a few hours or by the end of the business day.: url(https://placehold.co/1200x800/e2e8f0/64748b?text=Live+Map+Placeholder); filter: grayscale(50%) blur(2px); opacity: 0.6;"></div>
+          <!-- TWEAK: Changed min-h-[40rem] to min-h-[30rem] and bg-gray-300 to bg-gray-500 -->
+          <div class="relative w-full h-full min-h-[30rem] flex-grow rounded-lg bg-gray-500 flex items-center justify-center">
+            <div class="absolute inset-0 bg-cover bg-center rounded-lg" style="background-image: url(https://placehold.co/1200x800/e2e8f0/64748b?text=Live+Map+Placeholder); filter: grayscale(50%) blur(2px) opacity(0.6);"></div>
             <div class="relative z-10 text-center p-4 bg-white bg-opacity-75 rounded-lg shadow-xl">
               <h4 class="text-2xl font-bold text-gray-800">Live Map Placeholder</h4>
               <p class="text-gray-600">Real map will be integrated here.</p>
@@ -67,7 +67,8 @@ A same-day delivery service ensures that customers receive their parcels on the 
     </div>
     
     <!-- Right Column: Sidebar (Narrower) -->
-    <div class="lg:col-span-1 flex flex-col justify-between space-y-8 h-full">
+    <!-- TWEAK: Removed justify-between and h-full, changed to space-y-6 -->
+    <div class="lg:col-span-1 flex flex-col space-y-6">
       
       <!-- Driver Information Card (PLACEHOLDER) -->
       <div class="bg-white rounded-xl shadow-lg overflow-hidden">
