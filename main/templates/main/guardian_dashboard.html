@@ -20,13 +20,14 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
         <!-- LEFT COLUMN (2/3 Width: Live Tracking Map) -->
-        <div class="lg:col-span-2 space-y-8">
+        <!-- Make this column a flexible container (flex flex-col) so its children can stretch -->
+        <div class="lg:col-span-2 flex flex-col space-y-8">
             
-            <!-- Live Tracking Map Card -->
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-shadow duration-300 hover:shadow-xl">
+            <!-- Live Tracking Map Card - Use flex-grow and h-full to match right column height -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-shadow duration-300 hover:shadow-xl flex-grow flex flex-col">
                 
-                <!-- Header/Status Bar: PADDING REDUCED SLIGHTLY -->
-                <div class="p-4 pb-3 border-b border-gray-100 flex justify-between items-start">
+                <!-- Header/Status Bar -->
+                <div class="p-4 pb-3 border-b border-gray-100 flex justify-between items-start flex-shrink-0">
                     <div>
                         <h3 class="text-xl font-semibold text-vm-navy">Alex Johnson (Daughter)</h3>
                         <div class="flex items-center mt-1">
@@ -38,11 +39,11 @@
                 </div>
                 
                 <!-- Map and Location Details -->
-                <!-- PADDING REDUCED -->
-                <div class="p-4">
+                <!-- Use flex-grow here to make this section fill the remaining vertical space -->
+                <div class="p-4 flex flex-col flex-grow">
                     
-                    <!-- Map Placeholder - RESTORED HEIGHT -->
-                    <div class="h-96 bg-gray-200 rounded-lg overflow-hidden relative border border-gray-300 mb-4">
+                    <!-- Map Placeholder - This must flex-grow to take up the space -->
+                    <div class="flex-grow bg-gray-200 rounded-lg overflow-hidden relative border border-gray-300 mb-4 min-h-[12rem]">
                         <!-- Simulate a map visual -->
                         <div class="absolute inset-0 bg-cover bg-center opacity-70" style="background-image: url('https://placehold.co/800x600/6B7280/F9FAFB?text=LIVE+MAP+FEED');"></div>
                         <div class="absolute inset-0 flex items-center justify-center backdrop-blur-sm">
@@ -52,9 +53,9 @@
                         </div>
                     </div>
                     
-                    <!-- Location Coordinates - PADDING REDUCED -->
-                    <h4 class="text-lg font-semibold text-gray-800 mb-3">Location Coordinates</h4>
-                    <div class="bg-gray-50 p-3 rounded-md grid grid-cols-2 gap-4">
+                    <!-- Location Coordinates - This is fixed height at the bottom -->
+                    <h4 class="text-lg font-semibold text-gray-800 mb-3 flex-shrink-0">Current Location Coordinates</h4>
+                    <div class="bg-gray-50 p-3 rounded-md grid grid-cols-2 gap-4 flex-shrink-0">
                         <div>
                             <label class="text-sm font-medium text-gray-500">Latitude</label>
                             <p class="text-lg font-mono text-gray-900">40.712800</p>
@@ -70,11 +71,11 @@
         </div>
 
         <!-- RIGHT COLUMN (1/3 Width: Sidebar) -->
-        <!-- SPACE-Y REDUCED to pull cards closer -->
-        <div class="lg:col-span-1 space-y-6"> 
+        <!-- Use Flex column and h-full to distribute space evenly and align vertically -->
+        <div class="lg:col-span-1 flex flex-col space-y-6"> 
             
-            <!-- Driver Information Card -->
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-shadow duration-300 hover:shadow-xl">
+            <!-- 1. Driver Information Card -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-shadow duration-300 hover:shadow-xl flex-shrink-0">
                 <div class="p-4">
                     <h4 class="text-xl font-semibold text-gray-800 mb-4">Driver Information</h4>
                     <div class="space-y-3">
@@ -92,7 +93,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- Reduced padding on the button bar -->
                 <div class="p-3 bg-gray-50 grid grid-cols-2 gap-3"> 
                     <a href="#" class="block w-full text-center bg-gray-200 text-gray-800 hover:bg-gray-300 px-4 py-3 rounded-md font-medium transition-colors duration-200">
                         View Details
@@ -103,11 +103,10 @@
                 </div>
             </div>
 
-            <!-- Tracking Status Legend Card -->
-            <!-- Reduced padding on this card -->
-            <div class="bg-white rounded-xl shadow-lg p-4">
+            <!-- 2. Tracking Status Legend Card -->
+            <div class="bg-white rounded-xl shadow-lg p-4 flex-shrink-0">
                 <h4 class="text-xl font-semibold text-gray-800 mb-4">Tracking Status Legend</h4>
-                <ul class="space-y-3">
+                <ul class="space-y-3 text-sm">
                     <li class="flex items-center">
                         <span class="h-3 w-3 rounded-full bg-green-500 mr-3"></span>
                         <span class="text-gray-700">Traveling - Active Ride</span>
@@ -125,6 +124,29 @@
                         <span class="text-gray-700">Offline / Error</span>
                     </li>
                 </ul>
+            </div>
+
+            <!-- 3. Tracking History Card (This card now flex-grows to fill the middle space) -->
+            <div class="bg-white rounded-xl shadow-lg p-4 flex-grow">
+                <h4 class="text-xl font-semibold text-gray-800 mb-4">Tracking History</h4>
+                <div class="space-y-4 text-sm">
+                    <div class="flex items-center">
+                        <div class="w-2 h-2 rounded-full bg-green-500 mr-3"></div>
+                        <span class="text-gray-700"><span class="font-medium text-gray-900">8:50 PM:</span> Left pickup location.</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-2 h-2 rounded-full bg-blue-500 mr-3"></div>
+                        <span class="text-gray-700"><span class="font-medium text-gray-900">8:41 PM:</span> Driver accepted ride.</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-2 h-2 rounded-full bg-yellow-500 mr-3"></div>
+                        <span class="text-gray-700"><span class="font-medium text-gray-900">8:40 PM:</span> Ride request received.</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-2 h-2 rounded-full bg-gray-400 mr-3"></div>
+                        <span class="text-gray-700"><span class="font-medium text-gray-900">8:39 PM:</span> Tracking initiated.</span>
+                    </div>
+                </div>
             </div>
 
         </div>
