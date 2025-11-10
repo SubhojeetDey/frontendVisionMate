@@ -3,8 +3,7 @@
 {% block title %}Welcome to VisionMate{% endblock %}
 
 {% block head %}
-<!-- TWEAK: Added custom CSS for fade-in animations -->
-<style>
+<!-- TWEAK: Added custom CSS for fade-in and new drift animations --><style>
   @keyframes fade-in-down {
     0% {
       opacity: 0;
@@ -28,7 +27,6 @@
   
   /* Classes to trigger the animations */
   .animate-fade-in-down {
-    /* Set opacity to 0 so it can fade in */
     opacity: 0; 
     animation: fade-in-down 0.8s ease-out 0.2s forwards;
   }
@@ -40,42 +38,70 @@
     opacity: 0;
     animation: fade-in-up 0.8s ease-out 0.6s forwards;
   }
+
+  /* TWEAK: New animation for background shapes */
+  @keyframes drift {
+    0% {
+      transform: translateY(0) scale(1);
+      opacity: 0;
+    }
+    20% {
+      /* Fade in gently */
+      opacity: 0.1;
+    }
+    80% {
+      /* Stay visible for most of the duration */
+      opacity: 0.1;
+    }
+    100% {
+      /* Drift up 1000px and fade out */
+      transform: translateY(-1000px) scale(1.5);
+      opacity: 0;
+    }
+  }
+
+  .animate-drift {
+    /* Run the drift animation over 25 seconds, linearly, and loop forever */
+    animation: drift 25s linear infinite;
+  }
+
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="w-full">
     
-    <!-- Hero Welcome Section -->
-    <!-- TWEAK: Added subtle gradient background -->
-    <div class="bg-gradient-to-b from-blue-50 to-gray-50">
-        <div class="max-w-7xl mx-auto py-20 px-4 sm:px-6 lg:py-28 lg:px-8 text-center">
+    <!-- Hero Welcome Section --><!-- TWEAK: Added subtle gradient background AND relative positioning for the shapes --><div class="bg-gradient-to-b from-blue-50 to-gray-50 relative overflow-hidden">
+        
+        <!-- TWEAK: NEW Animated Background Shapes --><!-- These are positioned absolutely and behind the text (z-0) --><div class="absolute inset-0 z-0">
+          <div class="absolute left-[10%] top-[10%] w-24 h-24 bg-vm-blue rounded-full animate-drift" style="animation-delay: -5s; animation-duration: 20s;"></div>
+          <div class="absolute left-[80%] top-[20%] w-12 h-12 bg-vm-green rounded-full animate-drift" style="animation-delay: -10s; animation-duration: 30s;"></div>
+          <div class="absolute left-[30%] top-[70%] w-16 h-16 bg-vm-blue rounded-full animate-drift" style="animation-delay: -2s; animation-duration: 25s;"></div>
+          <div class="absolute left-[60%] top-[50%] w-20 h-20 bg-vm-green rounded-full animate-drift" style="animation-delay: -15s; animation-duration: 22s;"></div>
+          <div class="absolute left-[5%] top-[80%] w-10 h-10 bg-vm-blue rounded-full animate-drift" style="animation-delay: -8s; animation-duration: 35s;"></div>
+          <div class="absolute left-[90%] top-[90%] w-14 h-14 bg-vm-green rounded-full animate-drift" style="animation-delay: -12s; animation-duration: 28s;"></div>
+        </div>
+
+        <!-- TWEAK: Added z-10 and relative positioning to ensure text is ON TOP of shapes --><div class="max-w-7xl mx-auto py-20 px-4 sm:px-6 lg:py-28 lg:px-8 text-center relative z-10">
             
-            <!-- TWEAK: Added text gradient for premium feel -->
-            <h1 class="text-4xl font-extrabold sm:text-5xl animate-fade-in-down bg-gradient-to-r from-vm-blue to-vm-green bg-clip-text text-transparent">
+            <!-- TWEAK: Added text gradient for premium feel --><h1 class="text-4xl font-extrabold sm:text-5xl animate-fade-in-down bg-gradient-to-r from-vm-blue to-vm-green bg-clip-text text-transparent">
                 Welcome to VisionMate
             </h1>
             
-            <!-- TWEAK: Added animation class -->
-            <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-600 animate-fade-in-up">
+            <!-- TWEAK: Added animation class --><p class="mt-4 max-w-3xl mx-auto text-lg text-gray-600 animate-fade-in-up">
                 Safe ride-sharing with real-time guardian tracking. Drive with confidence. Travel with peace of mind.
             </p>
         </div>
     </div>
 
-    <!-- Features Section (Login Cards) -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12">
-        <!-- TWEAK: Added animation class -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto animate-fade-in-up-delay">
+    <!-- Features Section (Login Cards) --><!-- TWEAK: Added relative z-10 so cards sit on top of any potential overflow from hero --><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 relative z-10">
+        <!-- TWEAK: Added animation class --><div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto animate-fade-in-up-delay">
             
-            <!-- Driver Card -->
-            <!-- TWEAK: Added hover animations -->
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col transition-all duration-300 hover:shadow-2xl hover:-translate-y-2">
+            <!-- Driver Card --><!-- TWEAK: Added hover animations --><div class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col transition-all duration-300 hover:shadow-2xl hover:-translate-y-2">
                 <div class="p-8 flex-grow">
                     <div class="inline-flex items-center justify-center h-12 w-12 rounded-lg bg-blue-100 text-vm-blue mb-4">
                         
-                        <!-- TWEAK: Replaced icon with a simple Car icon -->
-                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <!-- TWEAK: Icon made more noticeable (h-8 w-8, stroke-width="2") --><svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.125-.504 1.125-1.125V14.25m-17.25 4.5v-1.875a3.375 3.375 0 013.375-3.375h9.75a3.375 3.375 0 013.375 3.375v1.875m-17.25 4.5h16.5M5.625 13.5v-1.875a3.375 3.375 0 013.375-3.375h9.75a3.375 3.375 0 013.375 3.375v1.875" />
                         </svg>
                                               
@@ -86,21 +112,17 @@
                     </p>
                 </div>
                 <div class="p-6 bg-gray-50">
-                    <!-- TWEAK: Restored light-to-dark hover -->
-                    <a href="{% url 'main:driver_login' %}" class="block w-full text-center px-6 py-3 bg-vm-blue hover:bg-vm-blue-dark text-white font-semibold rounded-lg shadow-md transition-colors duration-200">
+                    <!-- TWEAK: Restored light-to-dark hover --><a href="{% url 'main:driver_login' %}" class="block w-full text-center px-6 py-3 bg-vm-blue hover:bg-vm-blue-dark text-white font-semibold rounded-lg shadow-md transition-colors duration-200">
                         Driver Login
                     </a>
                 </div>
             </div>
 
-            <!-- Guardian Card -->
-            <!-- TWEAK: Added hover animations -->
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col transition-all duration-300 hover:shadow-2xl hover:-translate-y-2">
+            <!-- Guardian Card --><!-- TWEAK: Added hover animations --><div class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col transition-all duration-300 hover:shadow-2xl hover:-translate-y-2">
                 <div class="p-8 flex-grow">
                     <div class="inline-flex items-center justify-center h-12 w-12 rounded-lg bg-green-100 text-vm-green mb-4">
                         
-                        <!-- TWEAK: Replaced icon with a simple Person icon -->
-                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <!-- TWEAK: Icon made more noticeable (h-8 w-8, stroke-width="2") --><svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                         </svg>
 
@@ -111,8 +133,7 @@
                     </p>
                 </div>
                 <div class="p-6 bg-gray-50">
-                    <!-- TWEAK: Restored light-to-dark hover -->
-                    <a href="{% url 'main:guardian_login' %}" class="block w-full text-center px-6 py-3 bg-vm-green hover:bg-vm-green-dark text-white font-semibold rounded-lg shadow-md transition-colors duration-200">
+                    <!-- TWEAK: Restored light-to-dark hover --><a href="{% url 'main:guardian_login' %}" class="block w-full text-center px-6 py-3 bg-vm-green hover:bg-vm-green-dark text-white font-semibold rounded-lg shadow-md transition-colors duration-200">
                         Guardian Login
                     </a>
                 </div>
@@ -121,23 +142,19 @@
         </div>
     </div>
 
-    <!-- TWEAK: NEW "How it Works" Section -->
-    <div class="py-24 bg-white mt-24">
+    <!-- TWEAK: NEW "How it Works" Section --><div class="py-24 bg-white mt-24">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center">
-                <!-- TWEAK: Added color to heading -->
-                <h2 class="text-3xl font-extrabold text-vm-blue">Simple, Safe, Secure</h2>
+                <!-- TWEAK: Added color to heading --><h2 class="text-3xl font-extrabold text-vm-blue">Simple, Safe, Secure</h2>
                 <p class="mt-4 text-lg text-gray-600">A seamless experience from start to finish.</p>
             </div>
 
             <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
                 
-                <!-- TWEAK: Step 1 - New Minimalist Icon -->
-                <div class="flex flex-col items-center">
+                <!-- TWEAK: Step 1 - New Minimalist Icon --><div class="flex flex-col items-center">
                     <div class="flex-shrink-0">
                         <div class="flex items-center justify-center h-16 w-16 rounded-full bg-vm-blue text-white shadow-lg">
-                            <!-- Icon: DevicePhoneMobileIcon (Outline) -->
-                            <svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <!-- Icon: DevicePhoneMobileIcon (Outline) --><svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75A2.25 2.25 0 0015.75 1.5m-7.5 0h7.5m-7.5 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V2.625c0-.621-.504-1.125-1.125-1.125H10.5z" />
                             </svg>
                         </div>
@@ -148,12 +165,10 @@
                     </div>
                 </div>
 
-                <!-- TWEAK: Step 2 - New Minimalist Icon -->
-                <div class="flex flex-col items-center">
+                <!-- TWEAK: Step 2 - New Minimalist Icon --><div class="flex flex-col items-center">
                     <div class="flex-shrink-0">
                         <div class="flex items-center justify-center h-16 w-16 rounded-full bg-vm-blue text-white shadow-lg">
-                            <!-- Icon: UserIcon (Outline) -->
-                            <svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <!-- Icon: UserIcon (Outline) --><svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                             </svg>
                         </div>
@@ -164,12 +179,10 @@
                     </div>
                 </div>
 
-                <!-- TWEAK: Step 3 - New Minimalist Icon -->
-                <div class="flex flex-col items-center">
+                <!-- TWEAK: Step 3 - New Minimalist Icon --><div class="flex flex-col items-center">
                     <div class="flex-shrink-0">
                         <div class="flex items-center justify-center h-16 w-16 rounded-full bg-vm-blue text-white shadow-lg">
-                            <!-- Icon: ShieldCheckIcon (Outline) -->
-                            <svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <!-- Icon: ShieldCheckIcon (Outline) --><svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.956 11.956 0 0112 3c2.37 0 4.54.78 6.24 2.114M15.76 15.76A11.96 11.96 0 0112 18.25c-2.37 0-4.54-.78-6.24-2.114m12.48-3.514A11.953 11.953 0 0118.25 12c0 2.37-.78 4.54-2.114 6.24m-3.514 3.514A11.953 11.953 0 0112 18.25c-2.37 0-4.54-.78-6.24-2.114M12 3.75a.75.75 0 01.75.75v.01a.75.75 0 01-.75.75H12a.75.75 0 01-.75-.75V4.5a.75.75 0 01.75-.75z" />
                             </svg>
                         </div>
