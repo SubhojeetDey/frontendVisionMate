@@ -103,22 +103,29 @@ def driver_dashboard(request):
     except DriverProfile.DoesNotExist:
         # This is a fallback in case the profile wasn't created in the admin
         driver_profile = None
-    req = requests.get('http://192.168.1.10:8000/rides/show_all',timeout=5)
-    data = req.json()
+    try:
+        req = requests.get('http://192.168.1.10:8000/rides/show_all',timeout=5)
+        data = req.json()
 
-    for i in data:
-        name = i.get('name')
-        location = i.get('location')
-        phone_no = i.get('phone_no')
-        adress = i.get('adress')
-        print(i)
+        for i in data:
+            name = i.get('name')
+            location = i.get('location')
+            phone_no = i.get('phone_no')
+            adress = i.get('adress')
+            print(i)
+            context = {
+                'name': name,
+                'location': location,
+                'phone_no': phone_no,
+                'adress': adress,
+                'driver_profile': driver_profile
+            }
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching data: {e}")
         context = {
-            'name': name,
-            'location': location,
-            'phone_no': phone_no,
-            'adress': adress,
             'driver_profile': driver_profile
         }
+        
     # CORRECTED PATH: Removed 'main/templates/'
     return render(request, 'main/driver_dashboard.html', context)
 

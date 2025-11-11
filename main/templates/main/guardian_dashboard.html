@@ -46,17 +46,16 @@
         <!-- --- 1. Text Content Area --- -->
         <div class="p-6">
           
-          {% if passenger %}
             <!-- TWEAK: Added flex container for name and button -->
             <div class="flex justify-between items-center mb-2">
               <!-- TWEAK: Passenger name is now the main heading -->
               <h3 class="text-3xl font-bold text-gray-800">
-                {{ passenger.name }}
+                Saurabh Sharma
               </h3>
               
               <!-- TWEAK: Added "Start Tracking" button -->
               <button id="start-tracking-btn" class="bg-vm-green hover:bg-vm-green-dark text-white font-semibold py-2 px-5 rounded-lg transition duration-300 shadow-sm">
-                Start Tracking
+                <a href="https://www.circuitdigest.cloud/geolinker-web-app" target="_blank">Start Tracking</a>
               </button>
             </div>
             
@@ -68,11 +67,7 @@
               </span>
               <span class="text-base font-medium">Traveling</span>
             </div>
-          {% else %}
-            <p class="text-base text-gray-600 mt-2">
-              No passenger linked. Please update your profile in the admin panel.
-            </p>
-          {% endif %}
+            
         </div>
 
         <!-- --- 2. Map Placeholder Area --- -->
