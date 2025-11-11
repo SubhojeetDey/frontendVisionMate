@@ -29,7 +29,8 @@
         <div class="p-6">
           <!-- TWEAK: Reduced font size from 2xl to xl -->
           <h3 class="text-xl font-semibold text-vm-navy mb-4">Your Status</h3>
-          
+
+          <div id="driver-status-block">
           {% if driver_profile %}
             {% if driver_profile.status == 'available' %}
               <div class="flex items-center space-x-3">
@@ -72,6 +73,20 @@
             </div>
             <p class="mt-2 text-gray-600">Please contact admin to complete your profile.</p>
           {% endif %}
+          </div>
+
+          <!-- Toggle status button -->
+          <div class="mt-4">
+            {% if driver_profile %}
+              {% if driver_profile.status == 'available' or driver_profile.status == 'on_ride' %}
+                <button type="button" onclick="toggleStatus(this)" data-state="online" class="w-full bg-vm-red hover:bg-red-700 text-white font-bold text-base py-3 px-6 rounded-lg transition duration-300 ease-in-out shadow-md">Go Offline</button>
+              {% else %}
+                <button type="button" onclick="toggleStatus(this)" data-state="offline" class="w-full bg-vm-green hover:bg-green-700 text-white font-bold text-base py-3 px-6 rounded-lg transition duration-300 ease-in-out shadow-md">Go Available</button>
+              {% endif %}
+            {% else %}
+              <button type="button" onclick="toggleStatus(this)" data-state="offline" class="w-full bg-vm-green hover:bg-green-700 text-white font-bold text-base py-3 px-6 rounded-lg transition duration-300 ease-in-out shadow-md">Go Available</button>
+            {% endif %}
+          </div>
         </div>
       </div>
       
@@ -130,7 +145,7 @@
             </a>
 
             <!-- TWEAK: Reduced font size from lg to base -->
-            <button class="w-full bg-vm-blue hover:bg-blue-700 text-white font-bold text-base py-3 px-6 rounded-lg transition duration-300 ease-in-out shadow-md">
+            <button type="button" onclick="acceptRide(this)" class="w-full bg-vm-blue hover:bg-blue-700 text-white font-bold text-base py-3 px-6 rounded-lg transition duration-300 ease-in-out shadow-md">
               Accept Ride
             </button>
           </div>
@@ -151,5 +166,78 @@
       {% endif %}
     </div>
   </div>
+  </div>
+
+  <script>
+    // Simple client-side handler: change button to "Ride Accepted", disable it,
+    // and show a small confirmation banner. This is purely UI-side.
+    function acceptRide(btn){
+      if(!btn) return;
+      // Prevent double clicks
+      btn.disabled = true;
+      btn.classList.remove('hover:bg-blue-700');
+      btn.classList.remove('bg-vm-blue');
+      btn.classList.add('bg-gray-400');
+      btn.textContent = 'Ride Accepted';
+
+      // Add a small confirmation banner below the card
+      try {
+        var container = btn.closest('.p-6');
+        if(container){
+          var existing = container.querySelector('.vm-ride-accepted-banner');
+          if(!existing){
+            var banner = document.createElement('div');
+            banner.className = 'vm-ride-accepted-banner mt-4 p-3 bg-green-50 border border-green-200 text-green-800 rounded';
+            banner.textContent = 'Ride accepted — awaiting further instructions.';
+            container.appendChild(banner);
+          }
+        }
+      } catch(e){
+        // silent fail — UI update only
+        console.error(e);
+      }
+    }
+    
+    // Toggle driver status between online and offline (UI-only).
+    function toggleStatus(btn){
+      if(!btn) return;
+      var container = btn.closest('.p-6');
+      if(!container) return;
+      var statusBlock = container.querySelector('#driver-status-block');
+
+      // Determine current state
+      var current = btn.dataset.state || (btn.textContent && btn.textContent.indexOf('Offline')>-1 ? 'online' : 'offline');
+      var next = (current === 'online') ? 'offline' : 'online';
+
+      // Update button appearance and dataset
+      btn.dataset.state = next;
+      if(next === 'online'){
+        btn.textContent = 'Go Offline';
+        btn.classList.remove('bg-vm-green','hover:bg-green-700');
+        btn.classList.add('bg-vm-red');
+        // ensure hover class for red
+        btn.classList.add('hover:bg-red-700');
+      } else {
+        btn.textContent = 'Go Available';
+        btn.classList.remove('bg-vm-red','hover:bg-red-700');
+        btn.classList.add('bg-vm-green');
+        btn.classList.add('hover:bg-green-700');
+      }
+
+      // Update status block content
+      try{
+        if(statusBlock){
+          if(next === 'online'){
+            statusBlock.innerHTML = '\n              <div class="flex items-center space-x-3">\n                <span class="flex h-3 w-3 relative">\n                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-vm-green opacity-75"></span>\n                  <span class="relative inline-flex rounded-full h-3 w-3 bg-vm-green"></span>\n                </span>\n                <span class="text-lg font-medium text-green-700">Available</span>\n              </div>\n              <p class="mt-2 text-gray-600">You are online and ready to receive ride requests.</p>\n            ';
+          } else {
+            statusBlock.innerHTML = '\n              <div class="flex items-center space-x-3">\n                <span class="flex h-3 w-3 relative">\n                  <span class="relative inline-flex rounded-full h-3 w-3 bg-gray-500"></span>\n                </span>\n                <span class="text-lg font-medium text-gray-700">Offline</span>\n              </div>\n              <p class="mt-2 text-gray-600">You are offline and will not receive requests.</p>\n            ';
+          }
+        }
+      } catch(e){
+        console.error(e);
+      }
+    }
+  </script>
+
 </div>
 {% endblock %}
